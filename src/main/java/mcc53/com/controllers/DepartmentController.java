@@ -40,28 +40,32 @@ public class DepartmentController {
     @GetMapping
     @PreAuthorize("hasAuthority('READ_DEPARTMENT')")
     public ResponseEntity<List<Department>> getAll(Authentication auth) {
-        System.out.println(auth.getName());
+        System.out.println(auth.getAuthorities().toString());
         return new ResponseEntity(departmentService.getAll(), HttpStatus.OK);
     }
     
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('READ_DEPARTMENT')")
     public ResponseEntity<Department> getById(
             @PathVariable("id") Long id) {
         return new ResponseEntity(departmentService.getById(id), HttpStatus.OK);
     }
     
     @PostMapping
+    @PreAuthorize("hasAuthority('CREATE_DEPARTMENT')")
     public ResponseEntity<Department> create(@RequestBody Department department) {
         return new ResponseEntity(departmentService.create(department), HttpStatus.OK);
     }
     
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('UPDATE_DEPARTMENT')")
     public ResponseEntity<Department> update(
             @PathVariable("id") Long id, @RequestBody Department department) {
         return new ResponseEntity(departmentService.update(id, department), HttpStatus.OK);
     }
     
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('DELETE_DEPARTMENT')")
     public ResponseEntity<Department> delete(@PathVariable("id") Long id) {
         return new ResponseEntity(departmentService.delete(id), HttpStatus.OK);
     }

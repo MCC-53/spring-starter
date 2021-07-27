@@ -8,11 +8,11 @@ package mcc53.com.config;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import mcc53.com.services.AppUserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -30,16 +30,23 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
  */
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebConfiguration extends WebSecurityConfigurerAdapter {
 
     private PasswordEncoder passwordEncoder;
+    private AppUserDetailService appUserDetailService;
 
     @Autowired
-    public WebConfiguration(PasswordEncoder passwordEncoder) {
+    public WebConfiguration(PasswordEncoder passwordEncoder,
+            AppUserDetailService appUserDetailService) {
         this.passwordEncoder = passwordEncoder;
+        this.appUserDetailService = appUserDetailService;
     }
-    
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(appUserDetailService).passwordEncoder(passwordEncoder);
+    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -50,35 +57,5 @@ public class WebConfiguration extends WebSecurityConfigurerAdapter {
                 .authenticated()
                 .and()
                 .httpBasic();
-    }
-
-    @Override
-    @Bean
-    protected UserDetailsService userDetailsService() {
-        List<UserDetails> users =  new ArrayList<>();
-        
-        UserDetails user1 = User.builder()
-                .username("uzumaki")
-                .password(passwordEncoder.encode("admin"))
-                .authorities(authorities())
-                .build();
-        
-        UserDetails user2 = User.builder()
-                .username("uchiha")
-                .password(passwordEncoder.encode("admin"))
-                .roles("EMPLOYEE")
-                .build();
-        
-        users.add(user1);
-        users.add(user2);
-        
-        return new InMemoryUserDetailsManager(users);
-    }
-    
-    private Collection<GrantedAuthority> authorities() {
-        List<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority("READ_DEPARTMENT"));
-        authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
-        return authorities;
     }
 }

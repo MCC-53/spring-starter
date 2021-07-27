@@ -21,33 +21,33 @@ import lombok.ToString;
 @Table(name = "employee")
 @ToString
 public class Employee {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
-    
+
     @Column(name = "first_name")
     @Basic(optional = false)
     private String firstName;
-    
+
     @Column(name = "last_name")
     @Basic(optional = false)
     private String lastName;
-    
+
     @Column(name = "email")
     @Basic(optional = false)
     private String email;
-    
+
     @Column(name = "address")
     @Basic(optional = true)
     private String address;
-    
+
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @ManyToOne
     @JoinColumn(name = "department_id", nullable = true)
     private Department department;
-    
+
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @ManyToMany()
     @JoinTable(
@@ -57,7 +57,7 @@ public class Employee {
     )
     private List<Project> projects;
 
-    public Employee(Long id, String firstName, String lastName, String email, 
+    public Employee(Long id, String firstName, String lastName, String email,
             String address, Department department, List<Project> projects) {
         this.id = id;
         this.firstName = firstName;
