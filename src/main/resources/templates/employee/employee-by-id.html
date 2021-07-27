@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>MCC 53 - Employee By Id Page</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <h1>Employee Detail</h1>
+        <div class="container">
+            <h3>Id</h3>
+            <p th:text="${employee.id}"></p>
+            <h3>First Name</h3>
+            <p th:text="${employee.firstName}"></p>
+            <h3>Last Name</h3>
+            <p th:text="${employee.lastName}"></p>
+            <h3>Email</h3>
+            <p th:text="${employee.email}"></p>
+            <h3>Address</h3>
+            <p th:text="${employee.address}"></p>
+            <h3>Department</h3>
+            <p th:text="${employee.department.name}"></p>
+        </div>
+    </body>
+</html>

@@ -8,6 +8,7 @@ package mcc53.com.controllers;
 import java.util.List;
 import mcc53.com.models.Employee;
 import mcc53.com.models.ResponseMessage;
+import mcc53.com.models.request.ResponseEmployee;
 import mcc53.com.services.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -41,6 +43,16 @@ public class EmployeeController {
         delete -> localhost:8080/employee/{id} -> DELETE
     */
     
+//    localhost:8080/employee/{id}
+//    localhost:8080/employee?firstName=abiyoga&lastName=onoy
+//    localhost:8080/user/transaksi/{userId}
+//    localhost:8080/employee/12
+//    localhost:8080/employee/filter
+    
+//    findByFirstNameOrLastNameOrAddressCaontains(???) LIKE '%%'
+    
+    
+    
     private EmployeeService employeeService;
     
     @Autowired
@@ -54,11 +66,20 @@ public class EmployeeController {
         return new ResponseEntity(employeeService.getAlll(), HttpStatus.OK);
     }
 
-    
     @GetMapping("/{id}")
-    public ResponseEntity<Employee> getById(@PathVariable("id") Long id) {
+    public ResponseEntity<ResponseEmployee> getById(@PathVariable("id") Long id) {
         return new ResponseEntity(employeeService.getById(id), HttpStatus.OK);
     }
+    
+    //seacth employee by firstName, LastName, Address
+//    @GetMapping("/filter")
+//    public ResponseEntity<List<Employee>> filterByFirstName(
+//            @RequestParam("firstName") String firstName,
+//            @RequestParam("lastName") String lastName,
+//            @RequestParam("address") String address
+//    ) {
+//        return;
+//    }
     
     @PostMapping
     public ResponseEntity<Employee> create(@RequestBody Employee employee) {

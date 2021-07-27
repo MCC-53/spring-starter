@@ -18,4 +18,5 @@ import org.springframework.stereotype.Repository;
 public interface EmployeeRepository extends JpaRepository<Employee, Long>{
     
     List<Employee> findByDepartment_id (Long departmentId);
+    List<Employee> findByProjects_id (Long projectId);
 }

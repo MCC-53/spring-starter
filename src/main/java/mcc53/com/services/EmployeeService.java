@@ -5,9 +5,12 @@
  */
 package mcc53.com.services;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import mcc53.com.models.Employee;
+import mcc53.com.models.request.ResponseEmployee;
 import mcc53.com.repositories.DepartmentRepository;
 import mcc53.com.repositories.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,14 +40,22 @@ public class EmployeeService {
     }
     
     public Employee getById(Long id) {
-        return employeeRepository.findById(id)
+      return employeeRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(
                                HttpStatus.NOT_FOUND, "Employee not found"));
+        
+//        Map<String, Object> data = new HashMap<>();
+//        data.put("firstName", employee.getFirstName());
+//        data.put("lastName", employee.getLastName());
+//        data.put("id", employee.getId());
+        
+//        return new ResponseEmployee(employee.getFirstName(), 
+//                employee.getLastName(), employee.getId());
+//        return data;
     }
     
     public Employee create(Employee employee) {
         //ketika client memasukan id ke model/object maka kita anggap data sudah ada
-        System.out.println(employee.getDepartment().toString());
         if (employee.getId() != null) {
             throw new ResponseStatusException(
                     HttpStatus.CONFLICT, "Employee already exist");

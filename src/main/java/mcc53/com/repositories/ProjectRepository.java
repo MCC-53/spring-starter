@@ -5,6 +5,7 @@
  */
 package mcc53.com.repositories;
 
+import java.util.List;
 import mcc53.com.models.Project;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -15,5 +16,5 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface ProjectRepository extends JpaRepository<Project, Long>{
-    
+    List<Project> findByEmployees_id(Long employeeId);
 }

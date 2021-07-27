@@ -5,9 +5,12 @@
  */
 package mcc53.com.controllers;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import mcc53.com.models.Department;
 import mcc53.com.models.Employee;
+import mcc53.com.models.request.EmployeeDepartment;
 import mcc53.com.services.DepartmentService;
 import mcc53.com.services.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +18,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,13 +29,13 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/employee-department")
-public class EmployeeDepartment {
+public class EmployeeDepartmentController {
     
     private EmployeeService employeeService;
     private DepartmentService departmentService;
     
     @Autowired
-    public EmployeeDepartment(EmployeeService employeeService, 
+    public EmployeeDepartmentController(EmployeeService employeeService, 
             DepartmentService departmentService) {
         this.employeeService = employeeService;
         this.departmentService = departmentService;
@@ -45,5 +50,18 @@ public class EmployeeDepartment {
     @GetMapping("/employee/{id}")
     public ResponseEntity<Department> getByEmployeeId(@PathVariable("id") Long id) {
         return new ResponseEntity(departmentService.findByEmployeeId(id), HttpStatus.OK);
+    }
+    
+    @PostMapping
+    /*
+        department -> 1
+        employees -> >1
+    */
+    public ResponseEntity<Map<String, String>> createDepartmentEmployee(
+            @RequestBody EmployeeDepartment employeeDepartment) {
+        EmployeeDepartment res = departmentService.createDepartmentEmployee(
+                employeeDepartment);
+        
+        return new ResponseEntity(res, HttpStatus.OK);
     }
 }

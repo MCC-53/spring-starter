@@ -39,9 +39,11 @@ public class Department {
     @OneToMany(mappedBy = "department")
     private List<Employee> employees;
 
-    public Department(Long id, String name) {
+    public Department(Long id, String name, 
+            List<Employee> employees) {
         this.id = id;
         this.name = name;
+        this.employees = employees;
     }
 
     public Department() {
