@@ -1,0 +1,21 @@
+<aside class="menu-sidebar d-none d-lg-block" th:fragment="side_bar_utama">
+    <div class="logo">
+        <a href="#">
+            <img src="/temp/images/icon/logo.png" alt="Cool Admin" />
+        </a>
+    </div>
+    <div class="menu-sidebar__content js-scrollbar1">
+        <nav class="navbar-sidebar">
+            <ul class="list-unstyled navbar__list">
+                <li class="active" id="side-employee">
+                    <a th:href="@{/emp}">
+                        <i class="fas fa-tachometer-alt"></i>Employee</a>
+                </li>
+                <li id="side-department">
+                    <a th:href="@{/department}">
+                        <i class="fas fa-chart-bar"></i>Department</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</aside>
