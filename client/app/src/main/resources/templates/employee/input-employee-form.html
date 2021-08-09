@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <hr>
+                    <h3>Input Employee Here!</h3>
+                    <form action="#" th:action="@{/employees/save-employee}" th:object="${employeedto}" method="POST">
+                        <div class="form-group">
+                            <input type="text" th:field="*{firstName}" placeholder="First Name" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" th:field="*{lastName}" placeholder="Last Name" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" th:field="*{email}" placeholder="Email" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" th:field="*{phoneNumber}" placeholder="Phone Number" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control">
+                                <option th:each="department : ${departments}" th:text="${department.id}" th:value="${departmentId}"></option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control">
+                                <option th:each="project : ${projects}" th:text="${project.name}" th:value="${project.id}"></option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" th:field="*{username}" placeholder="Username" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" th:field="*{password}" placeholder="Password" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control">
+                                <option th:each="role : ${roles}" th:text="${role.name}" th:value="${role.id}"></option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Create</button>
+                    </form>
+                    <hr>
+                    <a th:href="@{/employees}">Back To Get All Employee</a>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

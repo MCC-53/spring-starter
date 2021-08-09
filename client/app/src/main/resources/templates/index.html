@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head th:include="_layout :: head_layout">
+        <title id="title">MCC 53 Official Website - Dashboard</title>
+    </head>
+    <body>
+        <script>
+            function getEmployeesUrl() {
+                return `http://localhost:8081/employees`;
+            } function getEmployees() {
+                const ajax = new XMLHttpRequest();
+                ajax.onload = function() {
+                    if (ajax.status === 200) {
+                        const data = JSON.parse(ajax.responseText);
+                        console.log(data);
+                    } else {
+                        console.log("Error get employees!");
+                    }
+                };
+                const url = getEmployeesUrl();
+                ajax.open("GET", url);
+                ajax.send();
+            }
+        </script>
+        <div class="_wrapper" th:include="_layout :: main_layout">
+            <div class="card" id="main">
+                <div class="card-header">
+                    <h3>Dashboard</h3>
+                </div>
+                <div class="card-body">
+                    <h1>Content</h1>
+                    <button onclick="getEmployees()">Get Employees</button>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

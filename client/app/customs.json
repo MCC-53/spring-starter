@@ -1,0 +1,20 @@
+{
+    "elements": {},
+    "attributes": {
+        "aria-current": {
+            "context": "a"
+        },
+        "integrity": {
+            "context": "link"
+        },
+        "th:include": {
+            "context": "title"
+        },
+        "th:onclick": {
+            "context": "button"
+        },
+        "th:fragment": {
+            "context": "div"
+        }
+    }
+}

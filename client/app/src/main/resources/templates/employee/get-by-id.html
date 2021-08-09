@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Get By ID</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div>
+            <h3>Employee ID</h3>
+            <p th:text="${employee.id}"></p>
+            <h3>Employee First Name</h3>
+            <p th:text="${employee.firstName}"></p>
+            <h3>Employee Last Name</h3>
+            <p th:text="${employee.lastName}"></p>
+            <h3>Employee Email</h3>
+            <p th:text="${employee.email}"></p>
+            <h3>Employee Phone Number</h3>
+            <p th:text="${employee.phoneNumber}"></p>
+            <h3>Department ID</h3>
+            <p th:text="${employee.departments.id}"></p>
+            <h3>Department Name</h3>
+            <p th:text="${employee.departments.name}"></p>
+            <h3>Project ID</h3>
+            <h7 th:each="projects : ${employee.projects}">
+                <p th:text="${projects.id}"></p>
+            </h7>
+            <h3>Project Name</h3>
+            <h7 th:each="projects : ${employee.projects}">
+                <p th:text="${projects.name}"></p>
+            </h7>
+            <h3>Project Description</h3>
+            <h7 th:each="projects : ${employee.projects}">
+                <p th:text="${projects.description}"></p>
+            </h7>
+            <h3>Username</h3>
+            <p th:text="${employee.users.username}"></p>
+            <h3>Password</h3>
+            <p th:text="${employee.users.password}"></p>
+            <h3>Role ID</h3>
+            <h7 th:each="roles : ${employee.users.roles}">
+                <p th:text="${roles.id}"></p>
+            </h7>
+            <h3>Role Name</h3>
+            <h7 th:each="roles : ${employee.users.roles}">
+                <p th:text="${roles.name}"></p>
+            </h7>
+            <h3 th:each="roles : ${employee.users.roles}">
+                <h3>Privilege ID</h3>
+                <h7 th:each="privilege : ${roles.privileges}">
+                    <p th:text="${privilege.id}"></p>
+                </h7>
+            </h3>
+            <h3 th:each="roles : ${employee.users.roles}">
+                <h3>Privilege Name</h3>
+                <h7 th:each="privilege : ${roles.privileges}">
+                    <p th:text="${privilege.name}"></p>
+                </h7>
+            </h3>
+        </div>
+    </body>
+</html>
