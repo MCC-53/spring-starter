@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html lang="en">
+<head th:replace="_layout :: head_layout">
+    <meta charset="UTF-8">
+    <title id="title">Department List</title>
+</head>
+<body>
+    <div th:replace="_layout :: main_layout">
+        <div id="main">
+            <div th:replace=":: #department-list">
+                <div class="container-fluid" id="department-list">
+                    <div class="d-flex justify-content-between">
+                        <h3>Department Table</h3>
+                        <button class="btn btn-sm btn-success"
+                                data-bs-toggle="modal"
+                                data-bs-target="#departmentModal"
+                                th:onclick="create()"
+                        >
+                            <i class="fa fa-sm fa-plus"></i>&nbsp;Add New
+                        </button>
+                    </div>
+                    <br>
+                    <table class="table table-striped" id="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Department ID</th>
+                            <th scope="col">Department Name</th>
+                            <th scope="col"> Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="departmentModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Department Form</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <form action="#" method="POST" class="needs-validation" novalidate>
+                        <div class="mb-3">
+                            <label class="form-label">Department Name</label>
+                            <input type="text" class="form-control input-data" id="deptname" required>
+                            <div class="invalid-feedback">
+                                Please input title
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" id="submitButton" class="btn btn-primary">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="_layout :: frag-script"></div>
+
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.0/css/bootstrap.min.css" integrity="sha512-P5MgMn1jBN01asBgU0z60Qk4QxiXo86+wlFahKrsQf37c9cro517WzVSPPV1tDKzhku2iJ2FVgL67wG03SGnNA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Department Detail</title>
+</head>
+<body>
+    <div class="container">
+
+        <div class="card" style="width: 50rem;">
+            <div class="card-body">
+                <h3 style="text-align: center; margin: 20px">Detail Department</h3>
+                <p>DepartmentID : <span th:text="${departments.id}"></span></p>
+                <p>Department Name : <span th:text="${departments.name}"></span></p>
+                <a th:href="@{/department/delete/{id}(id=${departments.id})}" class="btn btn-danger">Delete Department</a>
+                <a th:href="@{/department}" class="btn btn-info">Back to Home</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
