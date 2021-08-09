@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head th:replace="_layout::head-section">
+
+    <title>Employee List - HR Scheme</title>
+</head>
+<body>
+<div th:replace="_layout::wrapper">
+    <div id="main" >
+        <div th:replace="::#list-employee"></div>
+    </div>
+    <div class="container" id="list-employee">
+        <button type="button" class="btn btn-sm btn-success my-3"
+                data-bs-toggle="modal"
+                data-bs-target="#add-employee"
+                onclick=""
+        >
+            <i class="fa fa-sm fa-plus"></i>&nbsp;Add New
+        </button>
+
+<!--        <a href="#add-employee" class="btn btn-success mb-2">Add Employee</a>-->
+        <table id="tableEmployee" class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">First Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Address</th>
+    <!--            <th scope="col">Username</th>-->
+    <!--            <th scope="col">Projects</th>-->
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody id="tBodyEmployee">
+<!--            <tr th:each="employee : ${employees}">-->
+<!--                <td th:text="${employee.id}"></td>-->
+<!--                <td th:text="${employee.firstName}"></td>-->
+<!--                <td th:text="${employee.lastName}"></td>-->
+<!--                <td th:text="${employee.email}"></td>-->
+<!--                <td th:text="${employee.address}"></td>-->
+<!--    &lt;!&ndash;            <td th:text="${employee.user?.username}"></td>&ndash;&gt;-->
+<!--    &lt;!&ndash;            <td>&ndash;&gt;-->
+<!--    &lt;!&ndash;                <div th:each="proj : ${employee.projects}">&ndash;&gt;-->
+<!--    &lt;!&ndash;                    <p th:text="${proj.projectName}"></p>&ndash;&gt;-->
+<!--    &lt;!&ndash;                </div>&ndash;&gt;-->
+<!--    &lt;!&ndash;            </td>&ndash;&gt;-->
+<!--                <td>-->
+<!--                    <div>-->
+<!--                        <button type="button" class="btn btn-success"-->
+<!--                                data-bs-toggle="modal"-->
+<!--                                data-bs-target="#add-employee">-->
+<!--                            <i class="fa fa-eye" aria-hidden="true"></i>-->
+<!--                        </button>-->
+<!--                        <button type="button" class="btn btn-warning"-->
+<!--                                data-bs-toggle="modal"-->
+<!--                                data-bs-target="#add-employee">-->
+<!--                            <i class="fa fa-edit" aria-hidden="true"></i>-->
+<!--                        </button>-->
+<!--                        <button type="button" class="btn btn-danger"-->
+<!--                                data-bs-toggle="modal"-->
+<!--                                data-bs-target="#add-employee">-->
+<!--                            <i class="fa fa-trash" aria-hidden="true"></i>-->
+<!--                        </button>-->
+<!--                    </div>-->
+<!--                </td>-->
+<!--            </tr>-->
+            </tbody>
+        </table>
+        <!-- Modal -->
+        <div class="modal fade" id="add-employee" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Form Add Employee</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="#" method="POST" class="needs-validation" novalidate>
+                            <div class="mb-3">
+                                <label for="firstName" class="form-label">First Name</label>
+                                <input type="text" class="form-control" id="firstName" required>
+                                <div class="invalid-feedback">
+                                    Please input your first name
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="lastName" class="form-label">Last Name</label>
+                                <input type="text" class="form-control" id="lastName" required>
+                                <div class="invalid-feedback">
+                                    Please input your last name
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="email" required>
+                                <div class="invalid-feedback">
+                                    Please input your email
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="address" class="form-label">Address</label>
+                                <textarea class="form-control" aria-label="With textarea" id="address" required></textarea>
+                                <div class="invalid-feedback">
+                                    Please input your Address
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="department" class="form-label">Department ID</label>
+                                <input type="number" class="form-control" id="department" required>
+                                <div class="invalid-feedback">
+                                    Please input department ID
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" id="submitButton" class="btn btn-primary">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div th:replace="_layout::frag-js"></div>
+</body>
+</html>

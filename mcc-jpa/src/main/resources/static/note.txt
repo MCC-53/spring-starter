@@ -1,0 +1,46 @@
+// backend
+1. saat kita masuk pertama kali menggunakan spring security kita diberikan
+satu user dengan username = user dan password dengan randomUid. dan masih menggunakan
+in memory database.
+
+dalam membuat user:
+1. memiliki username (unique)
+2. password(harus di encode)
+3. Roles (mengontrol di endpoint apa saja user diizinkan)
+4. Authority (Dan apa yang dapat merekan lakukan)
+
+C. Membuat user
+- In Memory user details manager
+1. pada configurasi lakukan overide pada method userDetailService
+2. tambahkan annotasi Bean setelah annotasi overide untuk menyimpannya kedalam object
+3. kalian dapat mengambil data dari database atau mendefinisikan user sendiri didalam method.
+```
+// cara membuat definisi user
+        UserDetails rezaUser = User.builder()
+                .username("Reza")
+                .password("admin")
+                .roles("ADMIN") //ROLE_ADMIN
+                .build();
+        return new InMemoryUserDetailsManager(
+                rezaUser
+        );
+// output akan error karena password belum di encode
+
+// cara melakukan encode password
+1. buat class baru pada config dengan nama password config
+```
+ @Bean
+    public PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder(10);
+    }
+
+```
+2. instansiasi password encode pada application security config
+buat consturctor autoweired
+ubah format password menjadi .password(passwordEncoder.encode("admin"))
+
+```
+
+Untuk menglakukan post, put, dan delete.
+kita harus menambahkan .csrf().disable() agar dapat melakukan fungsi crud pada data API.
+

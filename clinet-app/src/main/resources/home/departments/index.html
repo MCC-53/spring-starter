@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.0/css/bootstrap.min.css" integrity="sha512-P5MgMn1jBN01asBgU0z60Qk4QxiXo86+wlFahKrsQf37c9cro517WzVSPPV1tDKzhku2iJ2FVgL67wG03SGnNA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Department List - HR Scheme</title>
+</head>
+<body>
+<div class="container-fluid">
+    <h2 style="text-align: center; margin: 20px">List Department</h2>
+    <a th:href="@{/department/form-department}" class="btn btn-success mb-2">Add Department</a>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">Department ID</th>
+            <th scope="col">Department Name</th>
+            <th scope="col">List Employee</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="department : ${departments}">
+            <td th:text="${department.id}"></td>
+            <td th:text="${department.name}"></td><td>
+            <table class="table table-striped">
+                <tbody th:each="emp : ${department.employee}">
+                <tr >
+                    <p th:text="${emp.id}+ '. ' +${emp.firstName} + ' ' + ${emp.lastName}"></p>
+                </tr>
+                </tbody>
+            </table>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

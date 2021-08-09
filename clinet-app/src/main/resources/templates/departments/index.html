@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head th:replace="_layout::head-section">
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.0/css/bootstrap.min.css" integrity="sha512-P5MgMn1jBN01asBgU0z60Qk4QxiXo86+wlFahKrsQf37c9cro517WzVSPPV1tDKzhku2iJ2FVgL67wG03SGnNA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Department List - HR Scheme</title>
+<body>
+<div th:replace="_layout::wrapper">
+    <div id="main" >
+        <div th:replace="::#department"></div>
+    </div>
+
+<div class="container-fluid" id="department">
+    <h2 style="text-align: center; margin: 20px">List Department</h2>
+    <button type="button" class="btn btn-sm btn-success my-3"
+            data-bs-toggle="modal"
+            data-bs-target="#departmentModal"
+            onclick="create()"
+    >
+        <i class="fa fa-sm fa-plus"></i>&nbsp;Add New
+    </button>
+
+    <table id="tableDepartment" class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">Department ID</th>
+            <th scope="col">Department Name</th>
+            <th scope="col">Action</th>
+        </tr>
+        </thead>
+        <tbody id="tBodyDepartment"></tbody>
+    </table>
+    <!-- Modal -->
+    <div class="modal fade" id="departmentModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Department Form</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <form action="#" method="POST" class="needs-validation" novalidate>
+                        <div class="mb-3">
+                            <label class="form-label">Department Name</label>
+                            <input type="text" class="form-control input-data" id="departmentName" required>
+                            <div class="invalid-feedback">
+                                Please input Department Name
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" id="submitButton" class="btn btn-primary">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+<div th:replace="_layout::frag-js"></div>
+</body>
+</html>

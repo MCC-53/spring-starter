@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <title>Employee List - HR Scheme</title>
+</head>
+<body>
+<div class="counter">
+
+</div>
+<div class="container-fluid">
+    <h2 style="text-align: center; margin: 20px">List Employee</h2>
+    <a href="/employee/add" class="btn btn-success mb-2">Add Employee</a>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">First Name</th>
+            <th scope="col">Last Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Address</th>
+<!--            <th scope="col">Username</th>-->
+<!--            <th scope="col">Projects</th>-->
+            <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="employee : ${employees}">
+            <td th:text="${employee.id}"></td>
+            <td th:text="${employee.firstName}"></td>
+            <td th:text="${employee.lastName}"></td>
+            <td th:text="${employee.email}"></td>
+            <td th:text="${employee.address}"></td>
+<!--            <td th:text="${employee.user?.username}"></td>-->
+<!--            <td>-->
+<!--                <div th:each="proj : ${employee.projects}">-->
+<!--                    <p th:text="${proj.projectName}"></p>-->
+<!--                </div>-->
+<!--            </td>-->
+            <td>
+                <div>
+                    <a th:href="@{/employee/{id}(id=${employee.id})}"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                    <a th:href="@{/employee/update/{id}(id=${employee.id})}"><i class="far fa-edit"></i></a>
+                    <a th:href="@{/employee/delete/{id}(id=${employee.id})}"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

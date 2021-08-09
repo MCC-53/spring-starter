@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.0/css/bootstrap.min.css" integrity="sha512-P5MgMn1jBN01asBgU0z60Qk4QxiXo86+wlFahKrsQf37c9cro517WzVSPPV1tDKzhku2iJ2FVgL67wG03SGnNA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Detail Employee | HR App</title>
+</head>
+<body>
+<div class="container">
+
+    <div class="card" style="width: 50rem;">
+        <div class="card-body">
+            <h3 style="text-align: center; margin: 20px">Detail Employe</h3>
+            <p>EmployeeID : <span th:text="${employee.id}"></span></p>
+<!--            <p>Username : <span th:text="${employee.user.username}"></span></p>-->
+            <p>Full Name: <span th:text="${employee.firstName} +' '+ ${employee.lastName}"></span></p>
+            <p>First Name: <span th:text="${employee.firstName}"></span></p>
+            <p>Last Name: <span th:text="${employee.lastName}"></span></p>
+            <p>Email: <span th:text="${employee.email}"></span></p>
+            <p>Address: <span th:text="${employee.address}"></span></p>
+<!--            <div th:each="projs : ${employee.projects}">-->
+<!--                <p>Project <span th:text="${projs.projectId} + ': '"> </span><span th:text="${projs.projectName}"> </span></p>-->
+<!--            </div>-->
+            <a th:href="@{/employee/delete/{id}(id=${employee.id})}" class="btn btn-danger">Delete Employee</a>
+            <a th:href="@{/employee}" class="btn btn-danger">Back</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>
