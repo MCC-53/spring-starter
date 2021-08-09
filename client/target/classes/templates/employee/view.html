@@ -1,0 +1,155 @@
+
+<head th:replace="item/header :: headers">
+</head>
+<body>
+<div class="dashboard-main-wrapper">
+    <div th:replace="item/header :: sidebars"></div>
+    <div th:replace="item/header :: navbars"></div>
+    <div class="dashboard-wrapper">
+        <div id="postResultDiv"></div>
+        <div class="container-fluid dashboard-content ">
+            <div class="container">
+
+                <button onclick="create()" type="button" class="btn btn-warning mb-4 mt-2" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo" id="btnForm">
+                    <i class="fas fa-plus"></i>
+                    Employee
+                </button>
+
+                <!-- Target modal/input form -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Employee</h5>
+                                <button type="button" class="btn-close btn-close-white pl-2 pr-2" data-bs-dismiss="modal" aria-label="Close">×</button>
+                            </div>
+                            <div class="modal-body">
+                                <p style="color: red" id="pesan"></p>
+                                <form class="needs-validation" id="postForm" novalidate>
+                                    <div class="col-md-6">
+                                        <label class="form-label">First Name</label>
+                                        <div class="input-group has-validation mb-3">
+                                            <input type="text" class="form-control" name="fistName" id="validationCustom01" aria-describedby="inputGroupPrepend" required>
+                                            <div class="invalid-feedback">
+                                                Please input your first name.
+                                            </div>
+                                        </div>
+
+                                        <label class="form-label">Last Name</label>
+                                        <div class="input-group has-validation mb-3">
+                                            <input type="text" class="form-control" name="lastName" id="validationCustom02" aria-describedby="inputGroupPrepend" required>
+                                            <div class="invalid-feedback">
+                                                Please input your last name.
+                                            </div>
+                                        </div>
+
+                                        <label class="form-label">Email</label>
+                                        <div class="input-group has-validation mb-3">
+                                            <input type="text" class="form-control" name="username" id="validationEmail" aria-describedby="inputGroupPrepend" required>
+                                            <div class="invalid-feedback">
+                                                Please input your email.
+                                            </div>
+                                        </div>
+
+                                        <label class="form-label">Address</label>
+                                        <div class="input-group has-validation mb-3">
+                                            <input type="text" class="form-control" name="username" id="validationCustom03" aria-describedby="inputGroupPrepend" required>
+                                            <div class="invalid-feedback">
+                                                Please input your address.
+                                            </div>
+                                        </div>
+
+                                        <label for="validationCustom04" class="form-label">Department</label>
+                                        <div class="input-group has-validation mb-3">
+                                            <select class="form-select pl-5 pl-5 pb-2 pt-1" id="validationCustom04" required>
+                                                <option selected disabled value="">Choose...</option>
+                                                <!--                                                <option>...</option>-->
+                                            </select>
+                                            <div class="invalid-feedback">
+                                                Please select a valid deparment.
+                                            </div>
+                                        </div>
+
+                                        <!-- Button trigger modal -->
+                                        <label class="form-label mb-2">Projects</label>
+                                        <button type="button" class="btn btn-success pl-4 pr-4 mb-4" data-bs-toggle="modal" data-bs-target="#exampleModal2" id="chooseProj">
+                                            <i class="fas fa-plus-circle"></i> Choose Projects
+                                        </button>
+
+                                        <button type="submit" class="btn btn-warning mt-3" id="submitForm">Submit</button>
+                                        <!--                                            <button type="button" class="btn btn-secondary mt-3" data-dismiss="modal">Close</button>-->
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--                End Modal Content-->
+
+
+                <!-- Modal 2-->
+                <!-- Modal: modalPoll -->
+                <div class="modal fade right" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                     aria-hidden="true" data-backdrop="false">
+                    <div class="modal-dialog modal-full-height modal-right modal-notify modal-info" role="document">
+                        <div class="modal-content">
+                            <!--Header-->
+                            <div class="modal-header">
+                                <p class="heading lead">Choose Project
+                                </p>
+
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true" class="white-text">×</span>
+                                </button>
+                            </div>
+                            <!--Body-->
+                            <div class="modal-body" id="projectChoose">
+
+                            </div>
+
+                            <!--Footer-->
+                            <div class="modal-footer justify-content-center">
+                                <button type="button" class="btn btn-success waves-effect waves-light">
+                                    <i class="fas fa-check-circle pl-1"></i> Choose
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal: modalPoll -->
+
+                <table class="hover" id="myTable">
+                    <thead>
+                    <tr >
+                        <th>First name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                        <th>Address</th>
+                        <th>Department Name</th>
+                        <th>Projects</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <!--                <tr th:each="employee : ${employees.data}">-->
+                    <!--                    <td th:text="${employee.firstName}"></td>-->
+                    <!--                    <td th:text="${employee.lastName}"></td>-->
+                    <!--                    <td th:text="${employee.email}"></td>-->
+                    <!--                    <td th:text="${employee.address}"></td>-->
+                    <!--                    <td th:text="${employee.department['name']}"></td>-->
+                    <!--                    <td th:each="project: ${employee.projects}">-->
+                    <!--                        <p th:text="${project.name}"></p>-->
+                    <!--                    </td>-->
+                    <!--                </tr>-->
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="item/footer :: footers"></div>
+
+<div th:replace="item/footer :: jav_script"></div>
+<script  src="/js/ajaxEmployee.js"></script>
+</body>
+
+</html>

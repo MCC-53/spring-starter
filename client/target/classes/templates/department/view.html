@@ -1,0 +1,68 @@
+<head th:replace="item/header :: headers">
+</head>
+<div class="dashboard-main-wrapper">
+    <div th:replace="item/header :: sidebars"></div>
+    <div th:replace="item/header :: navbars"></div>
+    <div class="dashboard-wrapper">
+        <div id="postResultDiv"></div>
+        <div class="container-fluid dashboard-content ">
+
+            <!--                Button Modal-->
+            <button type="button" class="btn btn-warning mb-3 mt-2" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo" id="btnForm" onclick="create()">
+                <i class="fas fa-plus"></i>
+                Tambah
+            </button>
+
+            <!-- Target modal/input form -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p style="color: red" id="pesan"></p>
+                            <form class="needs-validation" id="postForm" novalidate>
+                                <div class="col-md-6">
+                                    <label for="validationCustomUsername" class="form-label">Nama Departmant</label>
+                                    <div class="input-group has-validation">
+                                        <input type="text" class="form-control" name="username" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
+                                        <div class="invalid-feedback">
+                                            Please input department name.
+                                        </div>
+                                        <button onclick="reset()" class="btn btn-secondary ml-2 p-1">
+                                            <i class="fas fa-sync-alt"></i>
+                                        </button>
+                                    </div>
+                                    <button type="submit" class="btn btn-warning mt-3" id="submitForm">Submit</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--                End Modal Content-->
+            <div class="row">
+                <div class="table">
+                    <table class="display" id="myTable">
+                        <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div th:replace="item/footer :: footers"></div>
+        <div th:replace="item/footer :: jav_script"></div>
+        <script  src="/js/ajaxDepartment.js"></script>
+    </div>
+</div>
+
+</body>
+</html>
