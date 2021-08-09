@@ -55,5 +55,7 @@ public class WebConfiguration extends WebSecurityConfigurerAdapter {
 //                .antMatchers("/auth/**").permitAll()
 //                .antMatchers("/employee/**").permitAll()
                 .anyRequest().permitAll();
+//                .and()
+//                .httpBasic();
     }
 }

@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 const baseUrl = `http://localhost:8080/department`;
+let department={};
 
 $(document).ready(function () {
     showTable();
@@ -59,21 +60,20 @@ function reloadTable() {
 }
 
 function getById(id) {
-    let department;
     $.ajax({
         url: `${baseUrl}/showbyid/${id}`,
         dataType: 'json',
-        succes: (data) => {
-            console.log(data);
-            department=data;
+        success: (data) => {
+            department.id = data.id;
+            department.name = data.name;
         }
     });
-    return department;
 }
 
 function detail(id){
+    getById(id);
+    setForm();
     disabledForm(true);
-    setForm(getById(id));
 }
 
 function deleteById(id) {
@@ -90,8 +90,9 @@ function deleteById(id) {
 }
 
 function preparingUpdate(id){
+    getById(id);
+    setForm();
     disabledForm(false);
-    setForm(getById(id));
 }
 
 function update(department) {
@@ -109,8 +110,10 @@ function update(department) {
 }
 
 function preparingCreate(){
+    department = {};
+    department.id = 3;
+    setForm();
     disabledForm(false);
-    setForm({});
 }
 
 function create(department) {
@@ -127,16 +130,14 @@ function create(department) {
     });
 }
 
-function setForm(department){
+function setForm(){
     $('#id').val(department.id);
     $('#name').val(department.name);
 }
 
 function setDepartment() {
-    let department;
     department.id = $('#id').val();
     department.name = $('#name').val();
-    return department;
 }
 
 function eventSubmit() {

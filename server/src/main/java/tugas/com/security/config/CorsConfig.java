@@ -14,7 +14,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @author putug
  */
 @Configuration
-public class corsConfig implements WebMvcConfigurer {
+public class CorsConfig implements WebMvcConfigurer {
     
     private final String ENDPOINT = "/**";
     private final String[] ALLOWEDMETHOD = {"GET", "POST", "DELETE", "PUT"};
