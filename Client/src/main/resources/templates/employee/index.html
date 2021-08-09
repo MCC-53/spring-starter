@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <table>
+            <thead>
+                <tr>
+                    <td>id</td>
+                    <td>first name</td>
+                    <td>last name</td>
+                    <td>address</td>
+                    <td>email</td>
+                    <td>department id</td>
+                    <td>department name</td>
+                    <!--                <td>project</td>
+                                    <td>project description</td>-->
+                    <td>user id</td>
+                    <td>username</td>
+                    <td>user password</td>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr th:each="data : ${employees}">
+                    <td th:text="${data.id}"></td>
+                    <td th:text="${data.firstName}"></td>
+                    <td th:text="${data.lastName}"></td>
+                    <td th:text="${data.address}"></td>
+                    <td th:text="${data.email}"></td>
+                    <td th:text="${data.department.id}"></td>
+                    <td th:text="${data.department.name}"></td>
+                    <!--                    <td th:text="${data.project.name}"></td>
+                                        <td th:text="${data.project.description}"></td>-->
+                    <td th:text="${data.user.id}"></td>
+                    <td th:text="${data.user.username}"></td>
+                    <td th:text="${data.user.password}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </body>
+</html>
