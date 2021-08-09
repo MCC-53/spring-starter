@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head th:replace="_layout :: head_layout">
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.0/css/bootstrap.min.css" integrity="sha512-P5MgMn1jBN01asBgU0z60Qk4QxiXo86+wlFahKrsQf37c9cro517WzVSPPV1tDKzhku2iJ2FVgL67wG03SGnNA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title id="title">Department Catalog</title>
+</head>
+<body>
+    <div th:replace="_layout :: main_layout">
+        <div id="main">
+            <div th:replace=":: #department-list">
+                <div class="container-fluid" id="department-list">
+                    <h2 style="text-align: center; margin: 20px">Department Listing</h2>
+                    <a th:href="@{/department/form}" class="btn btn-primary">Add Department</a>
+                    <table class="table" id="table">
+                        <thead class="thead-light">
+                        <tr>
+                            <th scope="col">Department id</th>
+                            <th scope="col">Department name</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="department : ${departments.content}">
+                            <td th:text="${department.id}"></td>
+                            <td th:text="${department.name}"></td>
+                            <td>
+                                <div>
+                                    <a class="btn-btn-info" th:href="@{/department/{id}(id=${department.id})}">
+                                        <i class="fa fa-eye" aria-hidden="true"></i>
+                                    </a>
+                                    <a class="btn-btn-info" th:href="@{/department/reform/{id}(id=${department.id})}">
+                                        <i class="far fa-edit"></i>
+                                    </a>
+                                    <a class="btn-btn-info" th:href="@{/department/remove/{id}(id=${department.id})}">
+                                        <i class="fa fa-trash" aria-hidden="true"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div th:replace="_layout :: script"></div>
+</body>
+</html>
