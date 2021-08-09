@@ -1,7 +1,6 @@
 package com.nieceoftimes.clientside.controller;
 
 import com.nieceoftimes.clientside.model.Department;
-import com.nieceoftimes.clientside.model.ResponseData;
 import com.nieceoftimes.clientside.service.impl.DepartmentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,6 +27,10 @@ public class DepartmentController {
         return "department/index";
     }
 
+
+
+
+    /** Hit API with Rest Template Implementation */
     @GetMapping("/{id}")
     public String readDepartmentById(@PathVariable String id,
                                      Model model) {
@@ -54,9 +57,6 @@ public class DepartmentController {
     @GetMapping("/reform/{id}")
     public String viewDepartmentUpdate(@PathVariable String id,
                                        Model model) {
-//        ResponseData<Department> department = departmentService.readDepartmentById(id);
-//        model.addAttribute("department", department);
-
         Department department = new Department();
         model.addAttribute("department", department);
         model.addAttribute("departmentUpdate", departmentService.readDepartmentById(id).getContent());

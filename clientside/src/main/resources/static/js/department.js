@@ -1,24 +1,27 @@
 var department = {};
-var dataId;
+var dataId = '';
 
 $(document).ready(function () {
-    getAll();
-    submit();
-})
-
-function getAll() {
-    $.ajax({
-        url: '/department',
-        type: 'GET',
-        dataType: 'json',
-        success: response => {
-            let row = null;
-            response.forEach(data => {
-                row += `<tr>
-                            <td> ${data.id}</td>
-                            <td> ${data.name}</td>
-                            <td>
-                                <div class="action-button">
+    var table = $('#table').DataTable({
+        ajax: {
+            url: 'http://localhost:8087/api/department',
+            dataSrc: 'content'
+        },
+        "columns": [
+            {
+                "name": "Id",
+                "data": "id"
+            },
+            {
+                "name": "Department Name",
+                "data": "name"
+            },
+            {
+                "name": "Action",
+                "data": "id",
+                "render": function (data, type, row, meta) {
+                    return `
+                       <div class="action-button">
                                     <button 
                                         class="btn btn-sm btn-primary"
                                         data-bs-toggle="modal"
@@ -39,18 +42,16 @@ function getAll() {
                                         <i class="fa fa-sm fa-trash"></i>
                                     </button>
                                 </div>
-                            </td>
-                        </tr>`;
-            });
-            $('tbody').html(row);
-            dataTable();
-        }
-    })
-}
+                    `;
+                }
+            }
+        ]
+    });
+    submit();
+});
 
 function detail(id) {
     getById(id);
-
     disabledForm(true);
 }
 
@@ -64,33 +65,51 @@ function submit() {
     $('form').submit(e => {
         e.preventDefault();
         setValue();
+        if ($('.input-data').val()) {
+            if (dataId) {
+                $.ajax({
+                    type: "PUT",
+                    url: `http://localhost:8087/api/department/${dataId}`,
+                    contentType: 'application/json',
+                    data: JSON.stringify(department),
+                    dataType: 'json',
+                    success: data => {
+                        $(".modal").modal('hide');
+                        success('Department successfully updated');
+                        data.ajax.reload(null, false);
+                    },
+                    error: data => {
+                        error("Department cant be update")
+                    }
+                });
+            } else {
+                $.ajax({
+                    type: "POST",
+                    url: 'http://localhost:8087/api/department',
+                    contentType: 'application/json',
+                    data: JSON.stringify(department),
+                    dataType: 'json',
+                    success: data => {
+                        $(".modal").modal('hide');
+                        success('Department successfully created');
+                        data.ajax.reload(null, false);
+                    },
+                    error: data => {
+                        error("Department cant be create")
+                    }
+                });
+            }
+        }
         if (department) {
-            $.ajax({
-                type: "POST",
-                url: '/department/form',
-                contentType: 'application/json',
-                data: department,
-                dataType: 'json',
-                success: () => {
-                    success("department created");
-                }
-            });
+
         } else {
-            $.ajax({
-                type: "PUT",
-                url: '/department/reform',
-                contentType: 'application/json',
-                data: department,
-                success: () => {
-                    success("department updated");
-                }
-            })
+
         }
     })
 }
 
 function setValue() {
-    department.name = $('#name').val();
+    department.name = $('#departmentName').val();
 }
 
 function edit(id) {
@@ -103,17 +122,28 @@ function deleteById(id) {
         "department successfully deleted",
     "Delete",
         () => {
-            window.location.href = "/";
+            $.ajax({
+                type: "DELETE",
+                url: `http://localhost:8087/api/department/${id}`,
+                dataType: 'json',
+                success: data => {
+                    success('department deleted');
+                    data.ajax.reload(null, false)
+                },
+                error: data => {
+                    error("Department cant be delete");
+                }
+            })
         })
 }
 
 function getById(id) {
     $.ajax({
-        url: `department/${id}`,
+        url: `http://localhost:8087/api/department/${id}`,
         dataType: 'json',
         success: data => {
             dataId = id;
-            department.name = data.name;
+            department.name = data.content.name;
             setForm();
         }
     });
@@ -124,6 +154,6 @@ function setForm() {
 }
 
 function disabledForm(isDisable) {
-    $('#departmentName').val('disabled', isDisable);
+    $('#departmentName').prop('disabled', isDisable);
     $('#submitButton').prop('disabled', isDisable)
 }

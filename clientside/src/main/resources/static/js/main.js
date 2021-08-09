@@ -1,7 +1,3 @@
-function dataTable() {
-    $('#table').DataTable();
-}
-
 (function () {
     'use strict'
 

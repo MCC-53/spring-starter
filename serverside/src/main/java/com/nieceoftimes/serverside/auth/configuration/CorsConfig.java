@@ -6,7 +6,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class CorsConfig implements WebMvcConfigurer {
-    private final String[] DOMAINS = {"http://localhost:8087"};
+    private final String[] DOMAINS = {"http://localhost:8030"};
     private final String[] HTTPMETHODS = {"GET", "POST", "PUT", "DELETE"};
 
     @Override

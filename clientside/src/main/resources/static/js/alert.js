@@ -17,7 +17,10 @@ function error(message) {
     });
 }
 
-function question(question, message, confirmText, action) {
+function question(question,
+                  message,
+                  confirmText,
+                  action) {
     Swal.fire({
         title: question,
         showCancelButton: true,
@@ -25,6 +28,7 @@ function question(question, message, confirmText, action) {
         icon: 'question'
     }).then(result => {
         if (result.isConfirmed) {
+            success(message)
             action();
         }
     });
