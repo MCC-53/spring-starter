@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Add Project</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    </head>
+    <body>
+        <div class="container">
+  <div class="row">
+    <div class="col-md-3">
+      <hr>
+      <h3>Project Create Form</h3>
+      <form action="#" th:action="@{/project/add}" th:object="${project}" method="POST">
+        <div class="form-group">
+          <input type="text" th:field="*{lokasi}" placeholder="Nama Lokasi" class="form-control">
+          <input type="text" th:field="*{name}" placeholder="Nama Project" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-primary">Create</button>
+      </form>
+      <hr>
+      <a th:href="@{/project}">Back To Home</a>
+    </div>
+  </div>
+</div>
+    </body>
+</html>

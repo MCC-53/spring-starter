@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    </head>
+    <body class="p-3 mb-2 bg-light text-dark">
+       <div class="container">
+  <div class="row">
+    <div class="col-md-3">
+      <hr>
+      <h3>Department Create Form</h3>
+      <form action="#" th:action="@{/department/add}" th:object="${department}" method="POST">
+        <div class="form-group">
+          <input type="text" th:field="*{name}" placeholder="Name of Department" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-primary">Create</button>
+      </form>
+      <hr>
+      <a th:href="@{/department}">Back To Home</a>
+    </div>
+  </div>
+</div>
+    </body>
+</html>
