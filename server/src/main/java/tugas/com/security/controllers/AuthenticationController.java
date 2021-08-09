@@ -36,7 +36,7 @@ public class AuthenticationController {
     //register
     @PostMapping("register")
     public ResponseEntity<User> register(@RequestBody RegisterDto registerDto){
-        return new ResponseEntity(_authenticationService.Register(registerDto), HttpStatus.CREATED);
+        return new ResponseEntity(_authenticationService.registreationProcess(registerDto), HttpStatus.CREATED);
     }
     
     @GetMapping("register")

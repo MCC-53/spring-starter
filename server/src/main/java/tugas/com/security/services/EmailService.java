@@ -13,6 +13,8 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.context.Context;
+import org.thymeleaf.spring5.SpringTemplateEngine;
 import tugas.com.security.models.EmailToSend;
 
 /**
@@ -24,15 +26,18 @@ public class EmailService{
 
     @Autowired
     private JavaMailSender emailSender;
+    
+    @Autowired
+    private SpringTemplateEngine templateEngine;
 
-    public void sendSimpleMessage(EmailToSend email) {
+    public void sendSimpleMessage(EmailToSend email, Context context) {
         MimeMessage msg = emailSender.createMimeMessage();
         try {
             MimeMessageHelper message = new MimeMessageHelper(msg,StandardCharsets.UTF_8.name());
-            String htmlMsg = email.getText();
+            String emailBody = templateEngine.process(email.getText(), context);
             message.setTo(email.getTo());
             message.setSubject(email.getSubject());
-            message.setText(htmlMsg, true);
+            message.setText(emailBody, true);
             emailSender.send(msg);
         } catch (Exception e) {
             e.printStackTrace();

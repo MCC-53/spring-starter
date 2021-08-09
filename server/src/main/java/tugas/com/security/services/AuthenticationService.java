@@ -13,10 +13,12 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+import org.thymeleaf.context.Context;
 import tugas.com.security.dto.LoginDto;
 import tugas.com.security.dto.LoginSuccessDto;
 import tugas.com.security.dto.RegisterDto;
 import tugas.com.security.models.Department;
+import tugas.com.security.models.EmailToSend;
 import tugas.com.security.models.Employee;
 import tugas.com.security.models.User;
 import tugas.com.security.repositories.EmployeeRepository;
@@ -34,20 +36,33 @@ public class AuthenticationService {
     private UserRepository _userRepository;
     private RoleRepository _roleRepository;
     private PasswordEncoder _passwordEncoder;
+    private EmailService _emailService;
     
     @Autowired
     public AuthenticationService(EmployeeRepository employeeRepository, 
             UserRepository userRepository, 
             RoleRepository roleRepository, 
-            PasswordEncoder passwordEncoder)
+            PasswordEncoder passwordEncoder,
+            EmailService emailService)
     {
         _employeeRepository = employeeRepository;
         _userRepository = userRepository;
         _roleRepository = roleRepository;
         _passwordEncoder = passwordEncoder;
+        _emailService = emailService;
     }
     
-    public User Register(RegisterDto registerDto){
+    public User registreationProcess(RegisterDto registerDto){
+        User user = register(registerDto);
+        EmailToSend emailToSend = new EmailToSend();
+        emailToSend.setTo(registerDto.getEmail());
+        emailToSend.setSubject("Register Success");
+        emailToSend.setText("email/registerSuccess"); // Path html emailnya
+        _emailService.sendSimpleMessage(emailToSend, emailRegisterContext(registerDto));
+        return user;
+    }
+    
+    private User register(RegisterDto registerDto){
         Employee employee = new Employee();
         employee.setFirstName(registerDto.getFirstName());
         employee.setLastName(registerDto.getLastName());
@@ -62,6 +77,13 @@ public class AuthenticationService {
         _userRepository.save(user);
         
         return user;
+    }
+    
+    private Context emailRegisterContext(RegisterDto registerDto){
+        Context c = new Context();
+        c.setVariable("model", registerDto);
+               
+        return c;
     }
     
     //login

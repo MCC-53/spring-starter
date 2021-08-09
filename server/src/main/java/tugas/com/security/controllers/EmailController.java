@@ -33,9 +33,9 @@ public class EmailController {
     }
     
     
-    @GetMapping
-    public ResponseEntity SendEmail(@RequestBody EmailToSend email) {
-        sendEmailService.sendSimpleMessage(email);
-        return new ResponseEntity(HttpStatus.OK);
-    }   
+//    @GetMapping
+//    public ResponseEntity SendEmail(@RequestBody EmailToSend email) {
+//        sendEmailService.sendSimpleMessage(email);
+//        return new ResponseEntity(HttpStatus.OK);
+//    }   
 }
