@@ -66,13 +66,13 @@ function getById(id) {
         success: (data) => {
             department.id = data.id;
             department.name = data.name;
+            setForm();
         }
     });
 }
 
 function detail(id){
     getById(id);
-    setForm();
     disabledForm(true);
 }
 
@@ -91,7 +91,6 @@ function deleteById(id) {
 
 function preparingUpdate(id){
     getById(id);
-    setForm();
     disabledForm(false);
 }
 
@@ -111,7 +110,6 @@ function update(department) {
 
 function preparingCreate(){
     department = {};
-    department.id = 3;
     setForm();
     disabledForm(false);
 }
@@ -143,7 +141,7 @@ function setDepartment() {
 function eventSubmit() {
     $('form').submit((e) => {
         e.preventDefault();
-        let department = setDepartment();
+        setDepartment();
         if (!department.id) {
             create(department);
         } else {
