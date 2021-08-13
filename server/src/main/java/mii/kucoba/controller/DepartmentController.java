@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author haikal
  */
 @RestController
-//@PreAuthorize("hasAnyRole('ADMIN','USER')")
+@PreAuthorize("hasAnyRole('ADMIN','USER')")
 @RequestMapping("/department")
 public class DepartmentController {
     
@@ -45,6 +45,7 @@ public class DepartmentController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('READ_DEPARTMENT')")
     public ResponseEntity<Department> getDepartmentById(@PathVariable("id") Integer id){
         return new ResponseEntity(departmentService.getDepartmentById(id), HttpStatus.OK);
     }
@@ -55,13 +56,15 @@ public class DepartmentController {
         return new ResponseEntity(departmentService.createDepartment(d), HttpStatus.OK);
     }
     
-    @PutMapping("/{id}") 
+    @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('UPDATE_DEPARTMENT')")
     public ResponseEntity<Department> update(@PathVariable("id") Integer id,
             @RequestBody Department employee) {
         return new ResponseEntity(departmentService.update(id, employee), HttpStatus.OK);
     }
     
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('DELETE_DEPARTMENT')")
     public ResponseEntity<Department> delete(@PathVariable("id") Integer id) {
         return new ResponseEntity(new ResponseMessage<Department>(departmentService.delete(id), "Success"), HttpStatus.OK);
     }

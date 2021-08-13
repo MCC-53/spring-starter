@@ -7,6 +7,7 @@ package mii.kucoba.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import mii.kucoba.dto.AuthResponse;
 import mii.kucoba.dto.LoginRequest;
 import mii.kucoba.models.User;
@@ -36,7 +37,7 @@ public class AuthService {
     }
     
     public AuthResponse prosesLogin(LoginRequest req) {
-        AuthResponse auth = new AuthResponse();
+        AuthResponse authResponse = new AuthResponse();
         
         User user = new User();
         
@@ -49,13 +50,13 @@ public class AuthService {
         boolean pass = passwordEncoder.matches(req.getPassword(), user.getPassword());
         
         if(pass == true) {
-            String dat = userDetailService.loadUserByUsername(req.getUsername()).getAuthorities().toString();
-            List<String> data = new ArrayList<>();
-            data.add(user.getUsername());
-//            data.add(user.getPassword());
-            data.add(dat);
-            auth.setAuthorities(data);
-            return auth;
+            List<String> data = userDetailService.loadUserByUsername(req.getUsername()).getAuthorities()
+            .stream()
+            .map(auth -> auth.getAuthority())
+            .collect(Collectors.toList());                    
+            authResponse.setAuthorities(data);
+            
+            return authResponse;
         }else {
             throw new RuntimeException("PASSWORD SALAH GOBLOKKK");
         }
