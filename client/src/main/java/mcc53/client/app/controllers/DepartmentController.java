@@ -39,10 +39,6 @@ public class DepartmentController {
         return ("department/view");
     }
     
-    @GetMapping("/get-all")
-    public @ResponseBody List<Department> getAll() {
-        return departmentService.getAllDepartment();
-    }
     
     @GetMapping("{id}")
     public @ResponseBody Department getById(@PathVariable("id") Integer id){

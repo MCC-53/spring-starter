@@ -5,6 +5,8 @@
  */
 package mcc53.client.app.controllers;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author haikal
  */
 @Controller
-@RequestMapping("/")
+@RequestMapping("/dashboard")
 public class DashboardController {
 
     public DashboardController() {
@@ -22,6 +24,8 @@ public class DashboardController {
     
     @GetMapping
     public String indexWeb() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        System.out.println(auth.getPrincipal());
         return "/index";
     }
     

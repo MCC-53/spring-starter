@@ -1,7 +1,8 @@
 var dataTableDepartment = $('#table_id').DataTable( {
     ajax: {
-        url: 'http://localhost:8085/department',
-        dataSrc: ''
+        url: `http://localhost:8085/department`,
+        dataSrc: '',
+        beforeSend: addRequestHeader()
     },
     columns: [ { 'data' : 'id'}, 
                { 'data' : 'name' },

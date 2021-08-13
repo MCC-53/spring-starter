@@ -69,6 +69,7 @@ function submit() {
                 contentType: 'application/json',
                 data: JSON.stringify(department),
                 dataType:'json',
+                beforeSend: addRequestHeader(),
                 success: (data) => {
                     success('department updated');
                     $('.modal').modal('hide');
@@ -85,6 +86,7 @@ function submit() {
                 contentType: 'application/json',
                 data: JSON.stringify(department),
                 dataType: 'json',
+                beforeSend: addRequestHeader(),
                 success: (data) => {
                     success('department created');
                     $('.modal').modal('hide');
@@ -111,6 +113,7 @@ function deleteById(id) {
             type: "DELETE",
                 url: `http://localhost:8085/department/${id}`,
                 dataType:'json',
+                beforeSend: addRequestHeader(),
                 success: (data) => {
                     success('department deleted');
                     $('.modal').modal('hide');
@@ -134,6 +137,7 @@ function getById(id) {
         url: `http://localhost:8085/department/${id}`,
         dataType: 'json',
         type: "GET",
+        beforeSend: addRequestHeader(),
         success: (data) => {
             department.name = data.name;
             dept_id = data.id;

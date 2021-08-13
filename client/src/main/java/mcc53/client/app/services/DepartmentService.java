@@ -5,13 +5,18 @@
  */
 package mcc53.client.app.services;
 
+import java.nio.charset.Charset;
 import java.util.List;
 import mcc53.client.app.models.Department;
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -34,7 +39,7 @@ public class DepartmentService {
     
     public List<Department> getAllDepartment() {
         ResponseEntity<List<Department>> res = restTemplate.exchange(Url,
-                HttpMethod.GET, null,
+                HttpMethod.GET, new HttpEntity<>(createHeaders()),
                 new ParameterizedTypeReference<List<Department>>() {});
         return res.getBody();
     }
@@ -56,4 +61,18 @@ public class DepartmentService {
         restTemplate.delete(Url + "/" + departmentId, Department.class);
         return "done";
     }
+    
+    private HttpHeaders createHeaders(){
+    
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        String password = SecurityContextHolder.getContext().getAuthentication().getCredentials().toString();        
+        
+    return new HttpHeaders() {{
+         String auth = username + ":" + password;
+         byte[] encodedAuth = Base64.encodeBase64( 
+            auth.getBytes(Charset.forName("US-ASCII")) );
+         String authHeader = "Basic " + new String( encodedAuth );
+         set( "Authorization", authHeader );
+      }};
+}
 }
