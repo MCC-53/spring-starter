@@ -6,7 +6,8 @@ $(document).ready(function (e){
 var data = $('#table_employee').DataTable({
     ajax : {
         url : 'http://localhost:8085/emp',
-        dataSrc : ''
+        dataSrc : '',
+        beforeSend: addRequestHeader()
     },
     "columns": [ 
         {"targets": 0,

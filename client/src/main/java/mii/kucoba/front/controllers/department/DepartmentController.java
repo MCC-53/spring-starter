@@ -37,8 +37,8 @@ public class DepartmentController {
     }
     
     @GetMapping
-    public String getAllDataDepartment(Model model){
-        model.addAttribute("dept", departmentService.getDepartmentData());
+    public String getAllDataDepartment(){
+//        model.addAttribute("dept", departmentService.getDepartmentData());
         return "department/index2";
     }
     

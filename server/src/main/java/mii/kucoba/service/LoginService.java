@@ -7,6 +7,7 @@ package mii.kucoba.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import mii.kucoba.Detail.AppUserDetail;
 import mii.kucoba.Detail.AppUserDetailService;
 import mii.kucoba.models.User;
@@ -55,11 +56,14 @@ public class LoginService {
         }
         boolean pass = passwordEncoder.matches(l.getPassword(), user.getPassword());
         if(pass == true){
-            String dat = appUserDetailService.loadUserByUsername(l.getUsername()).getAuthorities().toString();
-            List<String> data = new ArrayList<>();
-                data.add(user.getUsername());
+//            String dat = appUserDetailService.loadUserByUsername(l.getUsername()).getAuthorities().toString();
+            List<String> data = appUserDetailService.loadUserByUsername(l.getUsername()).getAuthorities()
+                        .stream()
+                        .map(auth -> auth.getAuthority())
+                        .collect(Collectors.toList());
+//                data.add(user.getUsername());
 //                data.add(user.getPassword());
-                data.add(dat);
+//                data.add(dat);
                 authorization.setAuth(data);
             return authorization;
         }else{

@@ -47,11 +47,14 @@ public class SecurityWebService extends WebSecurityConfigurerAdapter{
     @Override
     protected void configure(HttpSecurity http) throws Exception {
             http
+                .cors()
+                .and()
                 .csrf()
                 .disable()
                 .authorizeRequests()
                 .antMatchers("/role","/privilege","/user").hasRole("ADMIN")
-                .antMatchers("/login","/emp/**","/department/**","/project/**").permitAll()
+                .antMatchers("/department","/emp/**").hasRole("ADMIN")
+                .antMatchers("/login","/project/**").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()

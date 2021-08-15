@@ -4,7 +4,7 @@ $(document).ready(function (e){
 })
 var data = $('#table_department').DataTable({
     ajax : {
-        url : 'http://localhost:8085/department',
+        url : '/department/get-data-department',
         dataSrc : ''
     },
     "columns": [ 

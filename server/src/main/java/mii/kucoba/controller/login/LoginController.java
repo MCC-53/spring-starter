@@ -38,8 +38,7 @@ public class LoginController {
     
     @PostMapping
     public ResponseEntity<Authorization> Login(@RequestBody Login data){
-        return new ResponseEntity(new ResponseMassage<Authorization>
-            (loginService.prosesLogin(data), "Success"), HttpStatus.OK);
+        return new ResponseEntity(loginService.prosesLogin(data), HttpStatus.OK);
     }
     
 }

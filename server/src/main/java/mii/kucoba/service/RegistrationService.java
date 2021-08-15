@@ -9,10 +9,14 @@ import mii.kucoba.models.Department;
 import mii.kucoba.models.Employee;
 import mii.kucoba.models.User;
 import mii.kucoba.models.request.Registration;
+import mii.kucoba.models.request.SendEmail;
 import mii.kucoba.repository.EmployeeRepository;
 import mii.kucoba.repository.UserRepository;
+import mii.kucoba.service.admin.SendEmailService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.context.Context;
 
 /**
  *
@@ -26,11 +30,15 @@ public class RegistrationService {
     private PasswordEncoder passwordEncoder;
     
     private EmployeeRepository employeeRepository;
+    
+    private SendEmailService sendEmailService;
 
-    public RegistrationService(UserRepository userRepository, PasswordEncoder passwordEncoder, EmployeeRepository employeeRepository) {
+    @Autowired
+    public RegistrationService(UserRepository userRepository, PasswordEncoder passwordEncoder, EmployeeRepository employeeRepository, SendEmailService sendEmailService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.employeeRepository = employeeRepository;
+        this.sendEmailService = sendEmailService;
     }
 
     public Registration CreateRegistration(Registration r){
@@ -48,9 +56,22 @@ public class RegistrationService {
         user.setEmployee(employeeRepository.save(employee));
         userRepository.save(user);
 
+        SendEmail sendEmail = new SendEmail();
+        sendEmail.setTo(r.getEmail());
+        sendEmail.setSubject("Selamat Anda Terdaftar");
+        sendEmailService.sendSimpleMessage(sendEmail, registerContext(r));
+        
         return r;
         
-        
     }
+    
+    private Context registerContext(Registration registerDto) {
+        Context context = new Context();
+        context.setVariable("fullName", registerDto.getName()+" "+registerDto.getLastname());
+        
+        return context;
+    }
+    
+    
     
 }
