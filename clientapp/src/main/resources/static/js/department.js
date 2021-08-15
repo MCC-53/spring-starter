@@ -10,7 +10,8 @@ $(document).ready(function () {
     var table= $('#table_dept').DataTable({
         ajax : {
             url : 'http://localhost:8081/department',
-            dataSrc : ''
+            dataSrc : '',
+            beforeSend: addRequestHeader()
         },
         "columns": [
             {
@@ -49,6 +50,7 @@ function getById(id) {
     $.ajax({
         url: `http://localhost:8081/department/${id}`,
         dataType: 'json',
+        beforeSend: addRequestHeader(),
         success: (data) => {
             depId = id;
             department.name = data.name;

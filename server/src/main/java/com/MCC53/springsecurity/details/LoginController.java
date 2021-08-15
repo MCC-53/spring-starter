@@ -38,7 +38,7 @@ public class LoginController {
     @PostMapping
     public ResponseEntity<AuthResponse> Login(@RequestBody LoginDto datalogin) {
 
-        return new ResponseEntity(new ResponseMessage<AuthResponse>(loginService.login(datalogin), "Succes"), HttpStatus.OK);
+        return new ResponseEntity(loginService.login(datalogin), HttpStatus.OK);
     }
     
     @GetMapping("/findAll")

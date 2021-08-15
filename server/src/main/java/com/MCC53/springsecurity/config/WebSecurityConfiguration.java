@@ -49,13 +49,14 @@ AppUserDetailsService appUserDetailsService;
 //             
                //appclientcoba
                .antMatchers("/employee/**").permitAll()
-               .antMatchers("/department/**").permitAll()
+//               .antMatchers("/department/**").permitAll()
                .antMatchers("/project/**").permitAll()
                
-               .antMatchers("/login/**","/register/**").permitAll()
+               .antMatchers("/login/**","/register/**","/email").permitAll()
                .anyRequest()
                .authenticated()
                .and()
+//               .formLogin()
                .httpBasic();
     
        http.cors();

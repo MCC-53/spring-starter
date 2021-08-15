@@ -48,11 +48,11 @@ public class DepartmentController {
 //        
 //        return "/department/view";  
 //    }
-//    
-//    @GetMapping("/get-all")
-//    public @ResponseBody List<Department> getAll(){
-//        return departmentService.getAll();
-//}
+    //getAll manual from ajax ke controller
+    @GetMapping("/get-all")
+    public @ResponseBody List<Department> getAllService(){
+        return departmentService.getAll();
+}
 //    @GetMapping("{id}")
 //    public @ResponseBody Department getById(@PathVariable("id") Long id){
 //        return departmentService.getById(id);

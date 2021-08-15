@@ -8,13 +8,16 @@ package com.MCC53.springsecurity.details;
 import com.MCC53.springsecurity.dto.RegisterDto;
 import com.MCC53.springsecurity.models.Department;
 import com.MCC53.springsecurity.models.Employee;
+import com.MCC53.springsecurity.models.SendEmail;
 import com.MCC53.springsecurity.models.User;
 import com.MCC53.springsecurity.repositories.EmployeeRepository;
 import com.MCC53.springsecurity.repositories.RoleRepository;
 import com.MCC53.springsecurity.repositories.UserRepository;
+import com.MCC53.springsecurity.services.SendEmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.context.Context;
 
 /**
  *
@@ -35,6 +38,9 @@ public class RegisterService {
     @Autowired
     private PasswordEncoder paswordEncoder;
     
+    @Autowired
+    private SendEmailService sendEmailService;
+    
     public RegisterDto SaveRegister (RegisterDto registerDto){
         
         Employee employee = new Employee();
@@ -52,9 +58,23 @@ public class RegisterService {
         user.setEmployee(employeeRepository.save(employee));
         userRepository.save(user);
         
+        
+        SendEmail sendEmail = new SendEmail();
+        sendEmail.setTo(registerDto.getEmail());
+        sendEmail.setSubject("Selamat Anda Terdaftar");
+        sendEmailService.sendSimpleMessage(sendEmail, registerContext(registerDto));
+        
+        
         return registerDto;
         
     }
-    
+    //register send email
+    private Context registerContext (RegisterDto registerDto){
+        
+        Context context = new Context();
+        context.setVariable("fullName", registerDto.getFirstname()+" "+registerDto.getLastname());
+        
+        return context;
+    }
  
 }

@@ -10,7 +10,8 @@ $(document).ready(function () {
     var table= $('#table_emp').DataTable({
         ajax : {
             url : 'http://localhost:8081/employee',
-            dataSrc : ''
+            dataSrc : '',
+            beforeSend: addRequestHeader()
         },
         "columns": [
             {
@@ -18,11 +19,11 @@ $(document).ready(function () {
                 "data": "id"
             },
             {
-                "name": "Employee Name",
+                "name": "First Name",
                 "data": "firstName"
             },
             {
-                "name": "Employee Name",
+                "name": "Last Name",
                 "data": "lastName"
             },
             {
@@ -78,7 +79,7 @@ $(document).ready(function () {
 
 function detail(id) {
     getById(id);
-    $('#departmentModal').modal('show');
+    $('#employeeModal').modal('show');
     disabledForm(true);
 }
 
@@ -86,6 +87,7 @@ function getById(id) {
     $.ajax({
         url: `http://localhost:8081/employee/${id}`,
         dataType: 'json',
+        beforeSend: addRequestHeader(),
         success: (data) => {
             IdEmp = id;
             employee.name = data.name;
@@ -146,12 +148,10 @@ function submit() {
     })
 }
 
-function setValue() {
-    employee.name = $('#name_emp').val();
-}
+
 function edit(id) {
     getById(id);
-    $('#departmentModal').modal('show');
+    $('#employeeModal').modal('show');
     disabledForm(false);
 }
 
@@ -174,13 +174,32 @@ function deleteById(id) {
         });
     });
 }
+function setValue() {
+    employee.firstName=$('#firstname').val();
+    employee.lastName=$('#lastname').val();
+    employee.email=$('#email').val();
+    employee.address=$('#address').val();
+    employee.department.name=$('#name_dept').val();
+    employee.project.name=$('#name_project').val();
+    
+}
 
 function setForm() {
-    $('#name_emp').val(employee.name);
+    $('#firstname').val(employee.name);
+    $('#lastname').val(employee.name);
+    $('#email').val(employee.name);
+    $('#addres').val(employee.name);
+    $('#name_dept').val(employee.name);
+    $('#name_project').val(employee.name);
 }
 
 function disabledForm(isDisable) {
-    $('#name_emp').prop('disabled', isDisable);
+    $('#firstname').prop('disabled',isDisable);
+    $('#lastname').prop('disabled', isDisable);
+    $('#email').prop('disabled', isDisable);
+    $('#addres').prop('disabled', isDisable);
+    $('#name_dept').prop('disabled', isDisable);
+    $('#name_project').prop('disabled', isDisable);
     $('#submitButton').prop('disabled', isDisable);
 }
 

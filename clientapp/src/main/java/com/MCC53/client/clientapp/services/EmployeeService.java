@@ -40,7 +40,7 @@ public class EmployeeService {
         
         return respon.getBody();
     }
-    //getbyid 
+    
     public Employee getByid (Long id){
         ResponseEntity <Employee> respon = restTemplate
                 .getForEntity(baseUrl +"/"+id,Employee.class);
@@ -55,5 +55,19 @@ public class EmployeeService {
                 .postForEntity(baseUrl, employee,Employee.class);
         
         return respon.getBody();
+    }
+    
+    public String delete (Long id){
+        
+        restTemplate.delete(baseUrl+"/"+id,Employee.class);
+        
+        return "delete sukses";
+    }
+    
+    public String updateDepartment (Long id, Employee department){
+        
+        restTemplate.put(baseUrl+"/"+id,department,Employee.class);
+        
+        return "update sukses";
     }
 }

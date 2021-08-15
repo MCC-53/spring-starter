@@ -11,6 +11,7 @@ import com.MCC53.springsecurity.models.User;
 import com.MCC53.springsecurity.repositories.UserRepository;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -49,13 +50,17 @@ public class LoginService {
 
         if (password == true){
             
-            String authority = appUserDetailsService.loadUserByUsername(loginDto.getUsername()).getAuthorities().toString();
+           
             
-            List <String> datarequest = new ArrayList<>();
+            List <String> datarequest = appUserDetailsService.loadUserByUsername(loginDto.getUsername()).getAuthorities()
+                    .stream()
+                    .map(auth -> auth.getAuthority())
+                    .collect(Collectors.toList());
+//            
             
-            datarequest.add(user.getUsername());
-//            datarequest.add(user.getPassword());
-            datarequest.add(authority);
+////            datarequest.add(user.getUsername());
+////            datarequest.add(user.getPassword());
+//            datarequest.add(authority);
             authorisasi.setAuthorities(datarequest);
             
             return authorisasi;
