@@ -12,6 +12,7 @@ import tugas.com.security.repositories.UserRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class LoginService {
@@ -39,12 +40,11 @@ public class LoginService {
         boolean isPasswordMatches  = passwordEncoder.matches(authRequest.getPassword(), user.getPassword());
 
         if (isPasswordMatches==true){
-            String data = userDetailService.loadUserByUsername(authRequest.getUsername()).getAuthorities().toString();
-            List<String> data2 = new ArrayList<>();
-            data2.add(user.getUsername());
-//            data2.add(user.getPassword());
-            data2.add(data);
-            authResponse.setAuthorities(data2);
+            List<String> datarequest = userDetailService.loadUserByUsername(authRequest.getUsername()).getAuthorities()
+                    .stream()
+                    .map(auth -> auth.getAuthority())
+                    .collect(Collectors.toList());
+            authResponse.setAuthorities(datarequest);
             return authResponse;
         }else {
             throw new UsernameNotFoundException("password tidak ditemukan");

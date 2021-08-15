@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/department")
-//@PreAuthorize("hasAnyRole('ADMIN', 'EMPLOYEE')")
+@PreAuthorize("hasAnyRole('ADMIN', 'EMPLOYEE')")
 public class DepartmentController {
     private DepartmentService departmentService;
 
@@ -23,31 +23,31 @@ public class DepartmentController {
     }
 
     @GetMapping
-//    @PreAuthorize("hasAuthority('READ_DATA')")
+    @PreAuthorize("hasAuthority('READ_DATA')")
     public ResponseEntity<List<Department>> getAll(){
         return new ResponseEntity(departmentService.getAll(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-//    @PreAuthorize("hasAuthority('READ_DATA')")
+    @PreAuthorize("hasAuthority('READ_DATA')")
     public ResponseEntity<Department> getById(@PathVariable("id") Long id){
         return new ResponseEntity(departmentService.getById(id), HttpStatus.OK);
     }
 
     @PostMapping
-//    @PreAuthorize("hasAuthority('CREATE_DATA')")
+    @PreAuthorize("hasAuthority('CREATE_DATA')")
     public ResponseEntity<Department> create(@RequestBody Department department){
         return new ResponseEntity(departmentService.create(department), HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-//    @PreAuthorize("hasAuthority('UPDATE_DEPARTMENT')")
+    @PreAuthorize("hasAuthority('CREATE_DATA')")
     public ResponseEntity<Department> update(@PathVariable("id") Long id, @RequestBody Department department){
         return new ResponseEntity(departmentService.update(id,department), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-//    @PreAuthorize("hasAuthority('DELETE_DEPARTMENT')")
+    @PreAuthorize("hasAuthority('CREATE_DATA')")
     public ResponseEntity<Department> delete(@PathVariable("id") Long id){
         return new ResponseEntity(departmentService.delete(id), HttpStatus.OK);
     }

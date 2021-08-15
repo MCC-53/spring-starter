@@ -14,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/project")
+@PreAuthorize("hasRole('ADMIN')")
 public class ProjectController {
     private ProjectService projectService;
 
@@ -22,33 +23,33 @@ public class ProjectController {
         this.projectService = projectService;
     }
 
-    @GetMapping("/show")
-//    @PreAuthorize("hasAuthority('READ_DATA')")
+    @GetMapping
+    @PreAuthorize("hasAuthority('READ_DATA')")
     public ResponseEntity<List<Project>> getAll(){
         return new ResponseEntity(projectService.getAll(), HttpStatus.OK);
     }
 
-    @GetMapping("/showbyid/{id}")
-//    @PreAuthorize("hasAuthority('READ_DATA')")
+    @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('READ_DATA')")
     public ResponseEntity<Project> getById(@PathVariable("id") Long id){
         return new ResponseEntity(projectService.getById(id), HttpStatus.OK);
     }
 
-    @PostMapping("/create")
-//    @PreAuthorize("hasAuthority('CREATE_DATA')")
+    @PostMapping
+    @PreAuthorize("hasAuthority('CREATE_DATA')")
     public ResponseEntity<Project> create(@RequestBody Project project){
         return new ResponseEntity(new ResponseMessage<Project>
                 (projectService.create(project), "project created"), HttpStatus.OK);
     }
 
-    @PutMapping("/update/{id}")
-//    @PreAuthorize("hasAuthority('UPDATE_PROJECT')")
+    @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('UPDATE_DATA')")
     public ResponseEntity<Project> update(@PathVariable("id") Long id, @RequestBody Project project){
         return new ResponseEntity(projectService.update(id,project), HttpStatus.OK);
     }
 
-    @DeleteMapping("/delete/{id}")
-//    @PreAuthorize("hasAuthority('DELETE_PROJECT')")
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('DELETE_DATA')")
     public ResponseEntity<Project> delete(@PathVariable("id") Long id){
         return new ResponseEntity(projectService.delete(id), HttpStatus.OK);
     }

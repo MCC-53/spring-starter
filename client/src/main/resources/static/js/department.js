@@ -3,10 +3,11 @@ var department = {};
 var depId;
 
 $(document).ready(function () {
-    var table= $('#table_department').DataTable({
+    $('#table_department').DataTable({
         ajax : {
             url : 'http://localhost:8081/department',
-            dataSrc : ''
+            dataSrc : '',
+            beforeSend : addRequestHeader()
         },
         "columns": [
             {
@@ -45,6 +46,7 @@ function getById(id) {
     $.ajax({
         url: `http://localhost:8081/department/${id}`,
         dataType: 'json',
+        beforeSend : addRequestHeader(),
         success: (data) => {
             depId = id;
             department.name = data.name;
@@ -72,6 +74,7 @@ function submit() {
                     contentType: 'application/json',
                     data: JSON.stringify(department),
                     dataType: 'json',
+                    beforeSend : addRequestHeader(),
                     success: (data) => {
                         console.log(data);
                         success('department update');
@@ -88,6 +91,7 @@ function submit() {
                     url: `http://localhost:8081/department`,
                     contentType: 'application/json',
                     data: JSON.stringify(department),
+                    beforeSend : addRequestHeader(),
                     dataType: 'json',
                     success: (data) => {
                         success('department created');
@@ -119,6 +123,7 @@ function deleteById(id) {
             url: `http://localhost:8081/department/${id}`,
             contentType: 'application/json',
             data: department,
+            beforeSend : addRequestHeader(),
             success: (data) => {
                 $('.modal').modal('hide');
                 success('department deleted');

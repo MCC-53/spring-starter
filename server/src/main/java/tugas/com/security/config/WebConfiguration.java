@@ -8,7 +8,6 @@ package tugas.com.security.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -55,8 +54,7 @@ public class WebConfiguration extends WebSecurityConfigurerAdapter {
                 .csrf()
                 .disable()
                 .authorizeRequests()
-                .antMatchers("/user/**", "/employee/**", "/department/**",
-                        "/project/**", "/employee-department/**", "/employee-project/**")
+                .antMatchers("/user/**", "/employee/**", "/employee-department/**", "/employee-project/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated()

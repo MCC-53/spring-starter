@@ -28,4 +28,5 @@ public class Privilege {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "privileges")
     private List<Role> roles;
+
 }
