@@ -8,10 +8,11 @@ var employee = {};
 var empId;
 
 $(document).ready(function () {
-    var table= $('#table_id').DataTable({
+    $('#table_id').DataTable({
         ajax : {
             url : 'http://localhost:8081/employee',
-            dataSrc : ''
+            dataSrc : '',
+            beforeSend : addRequestHeader()
         },
         "columns": [
             {
@@ -61,9 +62,9 @@ $(document).ready(function () {
                 "render": function ( data, type, row, meta ) {
                     return `
               <div class="d-flex justify-content-center">
-                  <a href="#" type="button" class = "btn btn-info btn-sm" onclick=""><i class="fas fa-eye"></i></a> | 
-                  <a href="#" type="button" class = "btn btn-warning btn-sm" onclick=""><i class="fas fa-edit"></i></a> | 
-                  <a href="#" type="button" class = "btn btn-danger btn-sm" onclick=""><i class="fas fa-trash-alt"></i></a> 
+                  <a href="#" type="button" class = "btn btn-info btn-sm" onclick="detail(${data})"><i class="fas fa-eye"></i></a> | 
+                  <a href="#" type="button" class = "btn btn-warning btn-sm" onclick="edit(${data})"><i class="fas fa-edit"></i></a> | 
+                  <a href="#" type="button" class = "btn btn-danger btn-sm" onclick="deleteById(${data})"><i class="fas fa-trash-alt"></i></a> 
               </div>
             `;
                 }
@@ -75,14 +76,16 @@ $(document).ready(function () {
 
 function detail(id) {
     getById(id);
-    disabledForm(true);
     $('#employeeModal').modal('show');
+    disabledForm(true);
 }
 
 function getById(id) {
     $.ajax({
+        type: "GET",
         url: `http://localhost:8081/employee/${id}`,
         dataType: 'json',
+        beforeSend : addRequestHeader(),
         success: (data) => {
             empId = id;
             employee.name = data.name;
@@ -98,6 +101,12 @@ function create() {
     disabledForm(false);
 }
 
+function edit(id) {
+    getById(id);
+    $('#employeeModal').modal('show');
+    disabledForm(false);
+}
+
 function submit() {
     $('form').submit((e) => {
         e.preventDefault();
@@ -110,9 +119,10 @@ function submit() {
                     contentType: 'application/json',
                     data: JSON.stringify(employee),
                     dataType: 'json',
+                    beforeSend : addRequestHeader(),
                     success: (data) => {
                         console.log(data);
-                        success('employee update');
+                        success('employee updated');
                         $('#table_id').DataTable().ajax.reload(null, false);
                     },
                     error: function (request, error) {
@@ -121,13 +131,14 @@ function submit() {
                     }
                 });
             }else{
-                var _this = this;
+//                var _this = this;
                 $.ajax({
                     type: "POST",
-                    url: `localhost:8081/employee/`,
+                    url: `http://localhost:8081/employee/`,
                     contentType: 'application/json',
                     data: JSON.stringify(employee),
                     dataType: 'json',
+                    beforeSend : addRequestHeader(),
                     success: (data) => {
                         success('employee created');
                         $('#table_id').DataTable().ajax.reload(null, false);
@@ -146,11 +157,6 @@ function submit() {
 function setValue() {
     employee.name = $('#name_emp').val();
 }
-function edit(id) {
-    getById(id);
-    $('#employeeModal').modal('show');
-    disabledForm(false);
-}
 
 function deleteById(id) {
     question("Do you want to delete this employee?", "employee deleted", "Delete", () => {
@@ -159,6 +165,7 @@ function deleteById(id) {
             url: `http://localhost:8081/employee/${id}`,
             contentType: 'application/json',
             data: employee,
+            beforeSend : addRequestHeader(),
             success: (data) => {
                 $('.modal').modal('hide');
                 success('employee deleted');

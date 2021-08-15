@@ -8,10 +8,11 @@ var department = {};
 var depId;
 
 $(document).ready(function () {
-    var table= $('#table_id').DataTable({
-        ajax : {
-            url : 'http://localhost:8081/department',
-            dataSrc : ''
+    $('#table_id').DataTable({
+        ajax: {
+            url: 'http://localhost:8081/department',
+            dataSrc: '',
+            beforeSend: addRequestHeader()
         },
         "columns": [
             {
@@ -25,7 +26,7 @@ $(document).ready(function () {
             {
                 "name": "Action",
                 "data": "id",
-                "render": function ( data, type, row, meta ) {
+                "render": function (data, type, row, meta) {
                     return `
               <div class="d-flex justify-content-center">
                   <a href="#" type="button" class = "btn btn-info btn-sm" onclick="detail(${data})"><i class="fas fa-eye"></i></a> | 
@@ -42,14 +43,16 @@ $(document).ready(function () {
 
 function detail(id) {
     getById(id);
-    disabledForm(true);
     $('#departmentModal').modal('show');
+    disabledForm(true);
 }
 
 function getById(id) {
     $.ajax({
+        type: "GET",
         url: `http://localhost:8081/department/${id}`,
         dataType: 'json',
+        beforeSend: addRequestHeader(),
         success: (data) => {
             depId = id;
             department.name = data.name;
@@ -59,27 +62,37 @@ function getById(id) {
 }
 
 function create() {
-    department={};
-    depId=null;
+    department = {};
+    depId = null;
     setForm({});
     disabledForm(false);
 }
+
+
+function edit(id) {
+    getById(id);
+    $('#departmentModal').modal('show');
+    disabledForm(false);
+}
+
+
 
 function submit() {
     $('form').submit((e) => {
         e.preventDefault();
         setValue();
-        if($('.input-data').val()){
-            if(depId){
+        if ($('.input-data').val()) {
+            if (depId) {
                 $.ajax({
                     type: "PUT",
-                    url: `http://localhost:8081/department/${depId}` ,
+                    url: `http://localhost:8081/department/${depId}`,
                     contentType: 'application/json',
                     data: JSON.stringify(department),
                     dataType: 'json',
+                    beforeSend: addRequestHeader(),
                     success: (data) => {
                         console.log(data);
-                        success('department update');
+                        success('department updated');
                         $('#table_id').DataTable().ajax.reload(null, false);
                     },
                     error: function (request, error) {
@@ -87,14 +100,15 @@ function submit() {
                         alert(" Can't do because: " + error);
                     }
                 });
-            }else{
-                var _this = this;
+            } else {
+//                var _this = this;
                 $.ajax({
                     type: "POST",
-                    url: `localhost:8081/department/`,
+                    url: `http://localhost:8081/department/`,
                     contentType: 'application/json',
                     data: JSON.stringify(department),
                     dataType: 'json',
+                    beforeSend: addRequestHeader(),
                     success: (data) => {
                         success('department created');
                         $('#table_id').DataTable().ajax.reload(null, false);
@@ -103,21 +117,18 @@ function submit() {
             }
             $('.modal').modal('hide');
             // setInterval('refreshPage()', 1000);
-        }else{
+        } else {
             e.preventDefault();
             $('.needs-validation').addClass('was-validated')
         }
     })
 }
 
+
 function setValue() {
     department.name = $('#name_dept').val();
 }
-function edit(id) {
-    getById(id);
-    $('#departmentModal').modal('show');
-    disabledForm(false);
-}
+
 
 function deleteById(id) {
     question("Do you want to delete this department?", "department deleted", "Delete", () => {
@@ -126,6 +137,7 @@ function deleteById(id) {
             url: `http://localhost:8081/department/${id}`,
             contentType: 'application/json',
             data: department,
+            beforeSend: addRequestHeader(),
             success: (data) => {
                 $('.modal').modal('hide');
                 success('department deleted');

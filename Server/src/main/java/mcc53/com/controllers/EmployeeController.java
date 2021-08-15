@@ -13,6 +13,7 @@ import mcc53.com.services.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,7 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/employee")
-//@PreAuthorize("hasAnyRole('admin', 'employee')")
+@PreAuthorize("hasAnyRole('admin')")
 public class EmployeeController {
         
     /*
@@ -48,13 +49,13 @@ public class EmployeeController {
     
     
     @GetMapping
-//    @PreAuthorize("hasAuthority('READ')")
+    @PreAuthorize("hasAuthority('READ')")
     public ResponseEntity<List<Employee>> getAll() {
         return new ResponseEntity(employeeService.getAlll(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-//    @PreAuthorize("hasAuthority('READ')")
+    @PreAuthorize("hasAuthority('READ')")
     public ResponseEntity<ResponseEmployee> getById(@PathVariable("id") Integer id) {
         return new ResponseEntity(employeeService.getById(id), HttpStatus.OK);
     }

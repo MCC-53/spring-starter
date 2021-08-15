@@ -10,7 +10,7 @@ import lombok.Data;
 
 /**
  *
- * @author WahyuKu
+ * @author Xvitas
  */
 @Data
 @AllArgsConstructor

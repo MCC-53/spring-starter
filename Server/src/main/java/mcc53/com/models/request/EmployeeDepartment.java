@@ -12,7 +12,7 @@ import mcc53.com.models.Employee;
 
 /**
  *
- * @author WahyuKu
+ * @author Xvitas
  */
 @Data
 public class EmployeeDepartment {

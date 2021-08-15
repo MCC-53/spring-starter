@@ -5,21 +5,19 @@
  */
 package mcc53.com.models.request;
 
-import java.util.List;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.util.List;
 /**
  *
  * @author Xvitas
  */
-@Builder
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
 @ToString
 public class Authorization {
     

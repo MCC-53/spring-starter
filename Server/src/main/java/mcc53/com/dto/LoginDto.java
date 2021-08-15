@@ -5,11 +5,11 @@
  */
 package mcc53.com.dto;
 
-import java.util.List;
-import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
+import java.util.List;
 
 /**
  *
@@ -19,7 +19,8 @@ import org.springframework.security.core.GrantedAuthority;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LoginDto {
+
     private String username;
     private String password;
-    private List<GrantedAuthority> roles;
+//    private List<GrantedAuthority> roles;
 }

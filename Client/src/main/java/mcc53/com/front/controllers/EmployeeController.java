@@ -5,9 +5,12 @@
  */
 package mcc53.com.front.controllers;
 
+import java.util.List;
+import mcc53.com.front.models.Employee;
+import mcc53.com.front.services.EmployeeService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 /**
  *
@@ -17,17 +20,52 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/employee")
 public class EmployeeController {
 
+    private EmployeeService employeeService;
+
+    @Autowired
+    public EmployeeController(EmployeeService employeeService) {
+        this.employeeService = employeeService;
+    }
 //==============================================================================
 //    GETALL
-@GetMapping()
+
+    @GetMapping()
     public String getAll() {
         return "/employee/view";
     }
-    
+
+    @GetMapping("/get-all")
+    public @ResponseBody
+    List<Employee> getAllService(Employee employee) {
+        return employeeService.getAll();
+    }
+//==============================================================================
+//    GETBYID
+
+//    @GetMapping("/get-by-id/{id}")
+//    public @ResponseBody
+//    Employee getByIdService(@PathVariable("id") Integer id) {
+//        return employeeService.getById(id);
+//    }
+//==============================================================================
+//    CREATE
+
+//    @PostMapping("/create")
+//    public @ResponseBody
+//    Employee create(@RequestBody Employee employee) {
+//        return employeeService.create(employee);
+//    }
+//==============================================================================
+//    DELETE
+
+//    @DeleteMapping("/delete/{id}")
+//    public @ResponseBody
+////            String deleteService(@PathVariable("id") Integer id) {
+//    String deleteService(@PathVariable("id") Integer id) {
+//        return employeeService.delete(id);
+//    }
+//==============================================================================
 }
-
-
-
 
 // YANG LAMA, GA KEPAKE LAGI!
 //    private EmployeeService employeeService;
