@@ -14,7 +14,7 @@ $(document).ready(function () {
 function showTable() {
     var table = $('#departmentTable').DataTable({
         ajax: {
-            url: `${baseUrl}/show`,
+            url: `department/api`,
             dataSrc: ''
         },
         columns: [
@@ -61,7 +61,7 @@ function reloadTable() {
 
 function getById(id) {
     $.ajax({
-        url: `${baseUrl}/showbyid/${id}`,
+        url: `department/api/${id}`,
         dataType: 'json',
         success: (data) => {
             department.id = data.id;

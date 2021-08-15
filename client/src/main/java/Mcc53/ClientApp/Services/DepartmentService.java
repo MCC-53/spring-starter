@@ -6,13 +6,17 @@
 package Mcc53.ClientApp.Services;
 
 import Mcc53.ClientApp.Models.Department;
+import java.nio.charset.Charset;
 import java.util.List;
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -37,7 +41,7 @@ public class DepartmentService {
         ResponseEntity<List<Department>> respon = _restTemplate.exchange(
                 endpoint, 
                 HttpMethod.GET, 
-                null, 
+                new HttpEntity(createHeader()), 
                 new ParameterizedTypeReference<List<Department>>() { });
         
         return respon.getBody();
@@ -47,7 +51,7 @@ public class DepartmentService {
         String endpoint = String.format("%s/create", _serverUrl);
         // Sesuaikan dengan apa yang dibutuhkan API postnya
         newData.setId(null);
-        HttpEntity<Department> request = new HttpEntity(newData);
+        HttpEntity<Department> request = new HttpEntity(newData, createHeader());
         ResponseEntity<Department> respon = _restTemplate.exchange(
                 endpoint, 
                 HttpMethod.POST, 
@@ -61,7 +65,7 @@ public class DepartmentService {
         ResponseEntity<Department> respon = _restTemplate.exchange(
                 endPoint, 
                 HttpMethod.GET, 
-                null, 
+                new HttpEntity<>(createHeader()), 
                 Department.class);
         
         return respon.getBody();
@@ -72,7 +76,7 @@ public class DepartmentService {
         ResponseEntity<Department> respon = _restTemplate.exchange(
                 endPoint, 
                 HttpMethod.DELETE, 
-                null, 
+                new HttpEntity<>(createHeader()), 
                 Department.class);
         
         return respon.getBody();
@@ -80,7 +84,7 @@ public class DepartmentService {
 
     public Department updateById(Department updatedData) {
         String endPoint = String.format("%s/update/%d", _serverUrl, updatedData.getId());
-        HttpEntity<Department> request = new HttpEntity(updatedData);
+        HttpEntity<Department> request = new HttpEntity(updatedData, createHeader());
         ResponseEntity<Department> respon = _restTemplate.exchange(
                 endPoint, 
                 HttpMethod.PUT, 
@@ -88,5 +92,19 @@ public class DepartmentService {
                 Department.class);
         
         return respon.getBody();
+    }
+    
+    private HttpHeaders createHeader(){
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        String password = SecurityContextHolder.getContext().getAuthentication().getCredentials().toString();
+
+        return new HttpHeaders() {{
+            String auth = username + ":" + password;
+            byte[] encodedAuth = Base64.encodeBase64(
+                    auth.getBytes(Charset.forName("US-ASCII")));
+            String authHeader = "Basic " + new String( encodedAuth );
+            set( "Authorization", authHeader );
+        }};
+
     }
 }

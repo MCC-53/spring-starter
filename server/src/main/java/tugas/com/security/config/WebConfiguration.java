@@ -20,7 +20,7 @@ import tugas.com.security.security.UserDetailService;
 
 @Configuration
 @EnableWebSecurity
-//@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebConfiguration extends WebSecurityConfigurerAdapter {
 
     private PasswordEncoder _passwordEncoder;
@@ -52,10 +52,10 @@ public class WebConfiguration extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-//                .antMatchers("/auth/**").permitAll()
+                .antMatchers("/auth/**").permitAll()
 //                .antMatchers("/employee/**").permitAll()
-                .anyRequest().permitAll();
-//                .and()
-//                .httpBasic();
+                .anyRequest().authenticated()
+                .and()
+                .httpBasic();
     }
 }

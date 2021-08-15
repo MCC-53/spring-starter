@@ -12,10 +12,12 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.Mapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  *
@@ -52,6 +54,12 @@ public class DepartmentController {
         model.addAttribute("department", _departmentService.getById(id));
         return String.format("/%s/%s", _FOLDER, "detailDepartment");
     }
+    
+    @GetMapping("api/{id}")
+    public @ResponseBody Department departmentDetail(@PathVariable("id") int id){
+        Department department = _departmentService.getById(id);
+        return department;
+    }
 
     @GetMapping
     public String showAll(Model model) {
@@ -60,6 +68,12 @@ public class DepartmentController {
 //        departments.add(new Department(1, "IT"));
         model.addAttribute("departments", departments);
         return String.format("/%s/%s", _FOLDER, "index");
+    }
+    
+    @GetMapping("api")
+    public @ResponseBody List<Department> showAll() {
+        List<Department> departments = _departmentService.getAll();
+        return departments;
     }
 
     @GetMapping("update/{id}")
