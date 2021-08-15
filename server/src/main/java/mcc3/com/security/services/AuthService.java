@@ -1,8 +1,8 @@
 package mcc3.com.security.services;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import mcc3.com.security.models.entities.User;
 import mcc3.com.security.models.request.AuthResponse;
 import mcc3.com.security.models.request.LoginRequest;
@@ -32,8 +32,8 @@ public class AuthService {
     }
     
     public AuthResponse login(LoginRequest request) {
-        AuthResponse auth = new AuthResponse();
-        Optional<User> data = userRepository.findByNameuser(request.getNameuser());
+        AuthResponse authorities = new AuthResponse();
+        Optional<User> data = userRepository.findByUsername(request.getUsername());
 
         data.orElseThrow(() -> new ResponseStatusException(
                 HttpStatus.UNAUTHORIZED, "Username not found!"));
@@ -44,12 +44,12 @@ public class AuthService {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Password incorrect!");
         }
         
-        String authority = appUserDetailsService.loadUserByUsername(request.getNameuser()).getAuthorities().toString();
-        List<String> requestData = new ArrayList<>();
-        requestData.add(authority);
-        auth.setAuthorities(requestData);
+        List<String> requestData = appUserDetailsService.loadUserByUsername(request.getUsername()).getAuthorities()
+                .stream().map(auth -> auth.getAuthority()).collect(Collectors.toList());
+        authorities.setAuthorities(requestData);
 
-        return auth;
+        return authorities;
     }
+    
 
 }

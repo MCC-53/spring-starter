@@ -1,15 +1,19 @@
 package mcc53.app.client.clientapp.controllers;
 
 import mcc53.app.client.clientapp.models.Employee;
+import mcc53.app.client.clientapp.models.ResponseData;
 import mcc53.app.client.clientapp.services.DepartmentService;
 import mcc53.app.client.clientapp.services.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  *
@@ -17,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping("/employees")
+//@PreAuthorize("hasAnyRole('ADMIN', 'EMPLOYEE')")
 public class EmployeeController {
     
     private EmployeeService employeeService;
@@ -34,7 +39,12 @@ public class EmployeeController {
     public String getView(Model model){
         model.addAttribute("departments", departmentService.getAll().getPayLoad());
         
-        return "employee/view";
+        return "pages/employee";
+    }
+    
+    @GetMapping("/get-all")
+    public @ResponseBody ResponseData<Employee> getAll(){
+        return employeeService.getAll();
     }
     
     @GetMapping("/add")

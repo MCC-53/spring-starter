@@ -7,6 +7,7 @@ import mcc3.com.security.models.request.ResponseData;
 import mcc3.com.security.services.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/employee")
-//@PreAuthorize("hasAnyRole('ADMIN','EMPLOYEE')")
+@PreAuthorize("hasAnyRole('ADMIN','EMPLOYEE')")
 public class EmployeeController { //OK
 
     private EmployeeService employeeService;
@@ -26,7 +27,7 @@ public class EmployeeController { //OK
     }
 
     @GetMapping
-//    @PreAuthorize("hasAuthority('READ')") //OK
+    @PreAuthorize("hasAuthority('READ')") //OK
     public ResponseEntity<ResponseData<List<Employee>>> getAll() {
         ResponseData<List<Employee>> responseData = new ResponseData<>();
         
@@ -47,7 +48,7 @@ public class EmployeeController { //OK
     }
 
     @PostMapping
-//    @PreAuthorize("hasAuthority('CREATE')") //OK
+    @PreAuthorize("hasAuthority('CREATE')") //OK
     public ResponseEntity<ResponseData<Employee>> create(
             @RequestBody EmployeeData employeeData) {
         System.out.println(employeeData);
@@ -60,7 +61,7 @@ public class EmployeeController { //OK
     }
 
     @PutMapping("/{id}")
-//    @PreAuthorize("hasAuthority('UPDATE')") //ok
+    @PreAuthorize("hasAuthority('UPDATE')") //ok
     public ResponseEntity<ResponseData<Employee>> update(@PathVariable("id") Long id,
             @RequestBody EmployeeData employeeData) {
         ResponseData<Employee> responseData = new ResponseData<>();
@@ -71,7 +72,7 @@ public class EmployeeController { //OK
         return ResponseEntity.ok(responseData);
     }
 
-//    @PreAuthorize("hasAuthority('DELETE')") //OK
+    @PreAuthorize("hasAuthority('DELETE')") //OK
     @DeleteMapping("/{id}")
     public ResponseEntity<ResponseData<Employee>> delete(@PathVariable("id") Long id) {
         ResponseData<Employee> responseData = new ResponseData<>();

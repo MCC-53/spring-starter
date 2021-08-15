@@ -17,7 +17,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long>{
     
-    Optional<User> findByNameuser(String username);
+    Optional<User> findByUsername(String username);
     
     @Modifying
     @Query(value = "INSERT INTO user_role VALUES (:user_id, :role_id);", nativeQuery = true)

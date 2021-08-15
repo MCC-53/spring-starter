@@ -4,27 +4,28 @@ var idData = 0;
 
 var data = $('#department_table').DataTable({
     ajax: {
-        url: 'http://localhost:8081/department',
-        dataSrc: 'payLoad'
+        url: `http://localhost:8081/department`,
+        dataSrc: 'payLoad',
+        beforeSend: addRequestHeader()
     },
     "columns": [
         {"data": "id"},
         {"data": "name"},
         {
             "data": "id",
-            "render": function (data, type, row, meta)  {
+            "render": function (data, type, row, meta) {
                 return `<div class="action-button">
                         <button 
                             class="btn btn-sm btn-primary" 
-                            data-bs-toggle="modal" 
-                            data-bs-target="#departmentModal"
+                            data-toggle="modal" 
+                            data-target="#departmentModal"
                             onclick="detail(${data})"
                         >
                             <i class="fa fa-sm fa-eye"></i>
                         </button>
                         <button class="btn btn-sm btn-warning text-white" 
-                            data-bs-toggle="modal" 
-                            data-bs-target="#departmentModal"
+                            data-toggle="modal" 
+                            data-target="#departmentModal"
                             onclick="edit(${data})"                                                    
                         >
                             <i class="fa fa-sm fa-edit"></i>
@@ -39,57 +40,13 @@ var data = $('#department_table').DataTable({
         }
     ]
 });
-setInterval(function () {
-    data.ajax.reload(null, false);
-}, 2000);
+//setInterval(function () {
+//    data.ajax.reload(null, false);
+//}, 2000);
 
 $(document).ready(function () {
     submit();
 });
-
-//function getAll() {
-//    $.ajax({
-//        url: 'http://localhost:8081/department',
-//        type: 'GET',
-//        dataType: 'json',
-//        success: (res) => {
-//            let row = null;
-//            res.forEach((data) => {
-//                row += `<tr>
-//                            <td>${data.id}</td>
-//                            <td>${data.name}</td>
-//                            <td>
-//                            <div class="action-button">
-//                                <button 
-//                                    class="btn btn-sm btn-primary" 
-//                                    data-bs-toggle="modal" 
-//                                    data-bs-target="#departmentModal"
-//                                    onclick="detail(${data.id})"
-//                                    >
-//                                    <i class="fa fa-sm fa-eye"></i>
-//                                </button>
-//                                <button class="btn btn-sm btn-warning text-white" 
-//                                    data-bs-toggle="modal" 
-//                                    data-bs-target="#departmentModal"
-//                                    onclick="edit(${data.id})"                                                    
-//                                    >
-//                                    <i class="fa fa-sm fa-edit"></i>
-//                                </button>
-//                                <button class="btn btn-sm btn-danger"
-//                                    onclick="deleteById(${data.id})"  
-//                                    >
-//                                    <i class="fa fa-sm fa-trash"></i>
-//                                </button>
-//                            </div>
-//                            </td>
-//                        </tr>`;
-//            });
-//
-//            $('tbody').html(row);
-//            dataTable();
-//        }
-//    });
-//}
 
 function detail(id) {
     getById(id);
@@ -117,15 +74,16 @@ function submit() {
                     type: "PUT",
                     url: `http://localhost:8081/department/${idData}`,
                     contentType: 'application/json',
+                    beforeSend: addRequestHeader(),
                     data: JSON.stringify(department),
                     dataType: 'json',
-                    success: (data) => {
+                    success: () => {
                         $(".modal").modal('hide');
-                        success('department updated');
+                        successToast("Department has been updated!")
                         data.ajax.reload(null, false);
                     },
-                    error: (data) => {
-                        error("department failed to update");
+                    error: () => {
+                        errorToast("Update department failed!");
                     }
                 });
             } else {
@@ -133,18 +91,18 @@ function submit() {
                     type: "POST",
                     url: `http://localhost:8081/department`,
                     contentType: 'application/json',
+                    beforeSend: addRequestHeader(),
                     data: JSON.stringify(department),
                     dataType: 'json',
-                    success: (data) => {
+                    success: () => {
                         $(".modal").modal('hide');
-                        success('department created');
+                        successToast("Department has been created!")
                         data.ajax.reload(null, false);
                     },
                     error: (data) => {
-                        error("department failed to create");
+                        errorToast("Create department failed!");
                     }
                 });
-
             }
         } else {
             e.preventDefault();
@@ -159,17 +117,18 @@ function edit(id) {
 }
 
 function deleteById(id) {
-    question("Do you want to delete this department?", "department deleted", "Delete", () => {
+    confirmToast("DELETE", "Once deleted, you will not be able to recover this imaginary file!", () => {
         $.ajax({
             type: "DELETE",
             url: `http://localhost:8081/department/${id}`,
+            beforeSend: addRequestHeader(),
             dataType: 'json',
-            success: (data) => {
-                success('department deleted');
+            success: () => {
+                successToast("Department has been deleted!")
                 data.ajax.reload(null, false);
             },
-            error: (data) => {
-                error("department failed delete");
+            error: () => {
+                errorToast("Delete department failed!");
             }
         });
     });
@@ -178,6 +137,7 @@ function deleteById(id) {
 function getById(id) {
     $.ajax({
         url: `http://localhost:8081/department/${id}`,
+        beforeSend: addRequestHeader(),
         dataType: 'json',
         success: (data) => {
             idData = id;

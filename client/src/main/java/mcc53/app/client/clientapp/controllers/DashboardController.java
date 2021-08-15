@@ -14,6 +14,6 @@ public class DashboardController {
     
     @GetMapping
     public String index() {
-        return "index";
+        return "pages/dashboard";
     }
 }

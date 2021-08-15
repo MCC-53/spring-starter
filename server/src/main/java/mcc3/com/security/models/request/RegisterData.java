@@ -21,7 +21,7 @@ public class RegisterData {
     
     private Long deptId;
     
-    private String nameuser;
+    private String username;
     
     private String password;
     

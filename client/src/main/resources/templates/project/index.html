@@ -32,6 +32,8 @@ and open the template in the editor.
                 <tr th:each="project : ${projects}">
                     <td th:text="${project.name}"></td>
                     <td th:text="${project.description}"></td>
+                    <td th:text="${project.employee.name}"></td>
+                    
                     <td>
                         <a th:href="@{projects/update/{id} (id=${project.id})}">
                             <i class="fas fa-edit"></i>

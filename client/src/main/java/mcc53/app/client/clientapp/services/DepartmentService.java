@@ -1,12 +1,17 @@
 package mcc53.app.client.clientapp.services;
 
+import java.nio.charset.Charset;
 import mcc53.app.client.clientapp.models.Department;
 import mcc53.app.client.clientapp.models.ResponseData;
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -29,36 +34,26 @@ public class DepartmentService {
     
     public ResponseData<Department> getAll() {
         ResponseEntity<ResponseData<Department>> response = restTemplate.exchange(baseUrl,
-                HttpMethod.GET, null,
+                HttpMethod.GET, new HttpEntity<>(createHeaders()),
                 new ParameterizedTypeReference<ResponseData<Department>>() {
         });
         
         return response.getBody();
     }
-//    
-//    public Department create(Department department) {
-//        ResponseEntity<Department> response
-//                = restTemplate.postForEntity(baseUrl, department, Department.class);
-//        return response.getBody();
-//    }
-//    
-//    public ResponseSingle<Department> getById(Long id) {
-//        ResponseEntity<ResponseSingle<Department>> response
-//                = restTemplate.exchange(baseUrl + "/" + id, HttpMethod.GET, null,
-//                        new ParameterizedTypeReference<ResponseSingle<Department>>() {
-//                });
-//        
-//        return response.getBody();
-//    }
-//    
-//    public Department update(Long id, Department department) {
-//        restTemplate.put(baseUrl + "/" + id, department, Department.class);
-//        return department;
-//    }
-//    
-//    public Long delete(Long id) {
-//        restTemplate.delete(baseUrl + "/" + id, Department.class);
-//        return id;
-//    }
+    
+    private HttpHeaders createHeaders() {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        String password = SecurityContextHolder.getContext().getAuthentication().getCredentials().toString();
+
+        return new HttpHeaders() {
+            {
+                String auth = username + ":" + password;
+                byte[] encodedAuth = Base64.encodeBase64(
+                        auth.getBytes(Charset.forName("US-ASCII")));
+                String authHeader = "Basic " + new String(encodedAuth);
+                set("Authorization", authHeader);
+            }
+        };
+    }
     
 }

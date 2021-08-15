@@ -35,7 +35,7 @@ public class RegisterService {
         employee.setDepartment(new Department(data.getDeptId()));
 
         User user = new User();
-        user.setNameuser(data.getNameuser());
+        user.setUsername(data.getUsername());
         String encodedPassword = passwordEncoder.encode(data.getPassword());
         user.setPassword(encodedPassword);
         user.setEmployee(employeeRepository.save(employee));

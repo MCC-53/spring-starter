@@ -1,0 +1,35 @@
+<html>
+    <head>
+        <title>Login Request</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <hr>
+                    <h3>Login Form</h3>
+                    
+                    
+                    <form method="POST">
+                        <div class="form-group">
+                            <input type="text" id="username" placeholder="Username" class="form-control">
+                            <br>
+                            <input type="password" id="password" placeholder="Password" class="form-control">
+                        </div>
+                        <button onclick="loginNow()" type="button" class="btn btn-primary">Create</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="/js/login.js"></script>
+        <script src="/js/alert.js"></script>
+        
+    </body>
+</html>

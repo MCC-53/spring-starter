@@ -5,7 +5,8 @@ let idEmployee = 0;
 var data = $('#employee_table').DataTable({
     ajax: {
         url: 'http://localhost:8081/employee',
-        dataSrc: 'payLoad'
+        dataSrc: 'payLoad',
+        beforeSend: addRequestHeader()
     },
     "columns":[
         {"data": "id"},
@@ -20,15 +21,15 @@ var data = $('#employee_table').DataTable({
                 return `<div class="action-button">
                         <button 
                             class="btn btn-sm btn-primary" 
-                            data-bs-toggle="modal" 
-                            data-bs-target="#employeeModal"
+                            data-toggle="modal" 
+                            data-target="#employeeModal"
                             onclick="detail(${data})"
                         >
                             <i class="fa fa-sm fa-eye"></i>
                         </button>
                         <button class="btn btn-sm btn-warning text-white" 
-                            data-bs-toggle="modal" 
-                            data-bs-target="#employeeModal"
+                            data-toggle="modal" 
+                            data-target="#employeeModal"
                             onclick="edit(${data})"                                                    
                         >
                             <i class="fa fa-sm fa-edit"></i>
@@ -52,6 +53,7 @@ function getById(id) {
     $.ajax({
         url: `http://localhost:8081/employee/${id}`,
         dataType: 'json',
+        beforeSend: addRequestHeader(),
         success: (data) => {
             idEmployee = id;
             employee.firstName = data.payLoad.firstName;
@@ -71,17 +73,18 @@ function detail(id) {
 }
 
 function deleteById(id) {
-    question("Do you want to delete this employee?", "employee deleted", "Delete", () => {
+    confirmToast("DELETE", "Once deleted, you will not be able to recover this imaginary file!", () => {
         $.ajax({
             type: "DELETE",
             url: `http://localhost:8081/employee/${id}`,
             dataType: 'json',
-            success: (data) => {
-                success('employee deleted');
-                ajax.reload(null, false);
+            beforeSend: addRequestHeader(),
+            success: () => {
+                successToast("Employee has been deleted!");
+                data.ajax.reload(null, false);
             },
             error: (data) => {
-                error("employee failed delete");
+                errorToast("Delete employee failed!");
             }
         });
     });
@@ -109,32 +112,34 @@ function submit() {
                 $.ajax({
                     type: "PUT",
                     url: `http://localhost:8081/employee/${idEmployee}`,
+                    beforeSend: addRequestHeader(),
                     contentType: 'application/json',
                     data: JSON.stringify(employee),
                     dataType: 'json',
-                    success: (data) => {
+                    success: () => {
                         $(".modal").modal('hide');
-                        success('employee updated');
+                        successToast("Employee has been updated!");
                         data.ajax.reload(null, false);
                     },
                     error: (data) => {
-                        error("employee failed to update");
+                        errorToast("Update employee failed!");
                     }
                 });
             } else {
                 $.ajax({
                     type: "POST",
                     url: `http://localhost:8081/employee`,
+                    beforeSend: addRequestHeader(),
                     contentType: 'application/json',
                     data: JSON.stringify(employee),
                     dataType: 'json',
-                    success: (data) => {
+                    success: () => {
                         $(".modal").modal('hide');
-                        success('employee created');
+                        successToast("Employee has been created!");
                         data.ajax.reload(null, false);
                     },
                     error: (data) => {
-                        error("employee failed to create");
+                        errorToast("Create employee failed!");
                     }
                 });
 
@@ -169,20 +174,5 @@ function disabledForm(isDisable) {
     $('#email').prop('disabled', isDisable);
     $('#address').prop('disabled', isDisable);
     $('#department_select').prop('disabled', isDisable);
+    $('#submitButton').prop('disabled', isDisable);
 }
-
-//function getAll() {
-//    $.ajax({
-//        url: 'http://localhost:8081/department',
-//        type: 'GET',
-//        dataType: 'json',
-//        success: (res) => {
-//            let optionSelect = null;
-//            res.forEach((data) => {
-//                optionSelect += `
-//                    <option>${data.id}</option>`;
-//            });
-//            $('select').html(row);
-//        }
-//    });
-//}

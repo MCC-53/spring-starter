@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -35,7 +36,7 @@ public class User implements UserDetails {
     private Employee employee;
     
     @Column(name = "username", nullable = false, length = 30, unique = true)
-    private String nameuser;
+    private String username;
     
     @Column(nullable = false)
     private String password;
@@ -54,9 +55,9 @@ public class User implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();
         for (Role roles : getRoles()){
-            authorities.add(new SimpleGrantedAuthority("ROLE_" + roles.getName()));
+            authorities.add(new SimpleGrantedAuthority("ROLE_" + roles.getName().toUpperCase()));
             for (Privilege privileges : roles.getPrivileges()) {
-                authorities.add(new SimpleGrantedAuthority(privileges.getName()));
+                authorities.add(new SimpleGrantedAuthority(privileges.getName().toUpperCase()));
             }
         }
         return authorities;
@@ -69,7 +70,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return nameuser;
+        return username;
     }
 
     @Override

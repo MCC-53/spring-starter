@@ -6,6 +6,7 @@ import mcc3.com.security.models.request.ResponseData;
 import mcc3.com.security.services.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/department")
+@PreAuthorize("hasRole('ADMIN')")
 public class DepartmentController {
 
     private DepartmentService departmentService;
@@ -24,6 +26,7 @@ public class DepartmentController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAuthority('READ')")
     public ResponseEntity<ResponseData<List<Department>>> getAll() { //OK
         ResponseData<List<Department>> responseData = new ResponseData<>();
         
@@ -44,6 +47,7 @@ public class DepartmentController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('CREATE')")
     public ResponseEntity<ResponseData<Department>> create( //OK
             @RequestBody Department department) { 
         ResponseData<Department> responseData = new ResponseData<>();
@@ -55,6 +59,7 @@ public class DepartmentController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('UPDATE')")
     public ResponseEntity<ResponseData<Department>> update(@PathVariable("id") Long id,
             @RequestBody Department department) { //OK
         ResponseData<Department> responseData = new ResponseData<>();
@@ -66,6 +71,7 @@ public class DepartmentController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('DELETE')")
     public ResponseEntity<ResponseData<Department>> delete(@PathVariable("id") Long id) { //OK
         ResponseData<Department> responseData = new ResponseData<>();
         responseData.setStatus(true);
