@@ -79,8 +79,8 @@ function detail(id){
 function deleteById(id) {
     question("Hapus department?", "Delete", () => {
         $.ajax({
-            type: "DELETE",
-            url: `${baseUrl}/delete/${id}`,
+            type: "POST",
+            url: `department/api/delete/${id}`,
             success: (data) => {
                 success(`department ${data.name} berhasil dihapus`);
                 reloadTable();
@@ -96,8 +96,8 @@ function preparingUpdate(id){
 
 function update(department) {
     $.ajax({
-        type: "PUT",
-        url: `${baseUrl}/update/${department.id}`,
+        type: "POST",
+        url: `department/api/update`,
         contentType: 'application/json',
         data: JSON.stringify(department),
         dataType: 'json',
@@ -117,7 +117,7 @@ function preparingCreate(){
 function create(department) {
     $.ajax({
         type: "POST",
-        url: `${baseUrl}/create`,
+        url: `department/api/create`,
         contentType: 'application/json',
         data: JSON.stringify(department),
         dataType: 'json',

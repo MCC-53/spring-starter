@@ -40,13 +40,13 @@ public class DepartmentController {
     }
 
     @PutMapping("/update/{id}")
-//    @PreAuthorize("hasAuthority('UPDATE_DEPARTMENT')")
+    @PreAuthorize("hasAuthority('UPDATE_DATA')")
     public ResponseEntity<Department> update(@PathVariable("id") Long id, @RequestBody Department department){
         return new ResponseEntity(departmentService.update(id,department), HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{id}")
-//    @PreAuthorize("hasAuthority('DELETE_DEPARTMENT')")
+    @PreAuthorize("hasAuthority('DELETE_DATA')")
     public ResponseEntity<Department> delete(@PathVariable("id") Long id){
         return new ResponseEntity(departmentService.delete(id), HttpStatus.OK);
     }

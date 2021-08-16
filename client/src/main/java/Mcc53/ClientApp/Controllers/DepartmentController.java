@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.Mapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -48,6 +49,12 @@ public class DepartmentController {
         String redirectUrl = String.format("%s/%d", _CONTROLLER, temp.getId());
         return "redirect:/" + redirectUrl;
     }
+    
+    @PostMapping("api/create")
+    public @ResponseBody Department apiDepartmentCreateForm(@RequestBody Department requestCreateDepartment) {
+        Department department = _departmentService.create(requestCreateDepartment);
+        return department;
+    }
 
     @GetMapping("{id}")
     public String departmentDetail(Model model, @PathVariable("id") int id) {
@@ -56,7 +63,7 @@ public class DepartmentController {
     }
     
     @GetMapping("api/{id}")
-    public @ResponseBody Department departmentDetail(@PathVariable("id") int id){
+    public @ResponseBody Department apiDepartmentDetail(@PathVariable("id") int id){
         Department department = _departmentService.getById(id);
         return department;
     }
@@ -71,7 +78,7 @@ public class DepartmentController {
     }
     
     @GetMapping("api")
-    public @ResponseBody List<Department> showAll() {
+    public @ResponseBody List<Department> apiShowAll() {
         List<Department> departments = _departmentService.getAll();
         return departments;
     }
@@ -89,11 +96,23 @@ public class DepartmentController {
         String redirectUrl = String.format("%s/%d", _CONTROLLER, temp.getId());
         return "redirect:/" + redirectUrl;
     }
+    
+    @PostMapping("api/update")
+    public @ResponseBody Department apiDepartmentUpdateForm(@RequestBody Department requestUpdateDepartment) {
+        Department department = _departmentService.updateById(requestUpdateDepartment);
+        return department;
+    }
 
-    @PostMapping("delete")
-    public String departmentDelete(int id) {
+    @PostMapping("delete/{id}")
+    public String departmentDelete(@PathVariable("id") int id) {
         Department temp = _departmentService.deleteById(id);
         String redirectUrl = String.format("%s", _CONTROLLER);
         return "redirect:/" + redirectUrl;
+    }
+    
+    @PostMapping("api/delete/{id}")
+    public @ResponseBody Department apiDepartmentDelete(@PathVariable("id") int id) {
+        Department department = _departmentService.deleteById(id);
+        return department;
     }
 }
