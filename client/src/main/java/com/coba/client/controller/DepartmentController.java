@@ -30,13 +30,6 @@ public class DepartmentController {
         return "department/view";
     }
 
-//    @GetMapping("/{id}")
-//    public String getById(@PathVariable("id") Long id, Model model) {
-//        model.addAttribute("department", departmentService.getById(id));
-//        return "/department/view-id";
-//    }
-
-
     @GetMapping("/add")
     public String showForm(Model model){
         Department department = new Department();
@@ -55,19 +48,7 @@ public class DepartmentController {
         return "department/update-form";
     }
     List<Department> dept = new ArrayList<>();
-//    @PostMapping("/save")
-//    public ResponseEntity<Department> saveDeparment(@RequestBody Department department){
-//        dept.add(department);
-//        System.out.println(department);
-//        Object temp = departmentService.create(department);
-//        return new ResponseEntity(temp, HttpStatus.OK);
-//    }
 
-//    @GetMapping("/delete/{id}")
-//    public String delete(@PathVariable("id")Long id){
-//        departmentService.del(id);
-//        return "redirect:/department";
-//    }
 
     //Ajax Controller
     @GetMapping("/get-all")

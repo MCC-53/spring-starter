@@ -22,15 +22,16 @@
     <div class="collapse navbar-collapse " id="navbarSupportedContent">
       <ul class="navbar-nav ml-auto navbar-right-top">
         <li class="nav-item dropdown nav-user">
-          <a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <img src="image/admin.jpg" alt="" class="user-avatar-md rounded-circle" width="40" height="40"></a>
-          <div class="dropdown-menu dropdown-menu-right nav-user-dropdown" aria-labelledby="navbarDropdownMenuLink2">
-            <a href="#"><i class="fas fa-power-off mr-2"></i>Logout</a>
-          </div>
+          <a class="nav-link nav-user-img"th:href="@{/auth/logout}" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-sign-out-alt" style="color:white;font-size:25px;"></i>
+          </a>
         </li>
       </ul>
     </div>
-  </nav>
+    </li>
+    </ul>
+</div>
+</nav>
 </div>
 
 <div class="nav-left-sidebar sidebar" th:fragment="sidebars">

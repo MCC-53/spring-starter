@@ -6,14 +6,17 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private AppUserService appUserService;
     private BcryptEncode bcryptEncode;
@@ -33,13 +36,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {//Configurasi page http yang diizinkan tanpa harus auth
         http.csrf().disable() //Disable auth untuk halaman yg ditunjuk
+                .cors().and()
                 .authorizeRequests().antMatchers("/auth/register").permitAll() //Berikan izin ke halaman /auth/register
-                .antMatchers("/employee").permitAll()
-                .antMatchers("/employee/{id}").permitAll()
                 .antMatchers("/department").permitAll()
                 .antMatchers("/project").permitAll()
                 .antMatchers("/department/{id}").permitAll()
                 .antMatchers("/email").permitAll()
+                .antMatchers("/auth/**").permitAll()
                 .anyRequest().fullyAuthenticated() //Selain halaman /auth/register seluruhnya harus melakukan authentikasi penuh
                 .and().httpBasic(); //Dengan method http basic => Mungkin auth nya harus Basic Auth
     }

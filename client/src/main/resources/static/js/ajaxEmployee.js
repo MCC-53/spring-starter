@@ -1,7 +1,9 @@
+console.log(getLocalStorage());
 $('#myTable').DataTable( {
     ajax: {
         url: 'http://localhost:8081/employee',
-        dataSrc: 'data'
+        dataSrc: 'data',
+        beforeSend: addRequestHeader()
     },
     columns: [
                 { "data": "firstName"},
@@ -11,7 +13,7 @@ $('#myTable').DataTable( {
                 { "data": "department.name" },
                 { "data": "projects[].name" },
                 { "data": "id",
-                  render : function ( data, type, row, meta ) {
+                  "render" : function ( data, type, row, meta ) {
                     return ` <button
                                 class="btn btn-sm btn-primary p-2 mr-2"
                                 data-bs-toggle="modal" data-bs-target="#exampleModal"
@@ -49,6 +51,7 @@ function getAllDepartment() {
         url: 'http://localhost:8081/department',
         type: 'GET',
         dataType: 'json',
+        beforeSend: addRequestHeader(),
         success: (res) => {
             let row = null;
             let data = res.data;
@@ -66,6 +69,7 @@ function getAllProject() {
         url: 'http://localhost:8081/project',
         type: 'GET',
         dataType: 'json',
+        beforeSend: addRequestHeader(),
         success: (res) => {
             let row = null;
             let data = res.data;
@@ -163,13 +167,12 @@ function details(id)
    getId_ajax(id);
    disable_ajax(true);
 }
-
-
 function getId_ajax(id)
 {
     $.ajax({
        url: "http://localhost:8081/employee/"+ id,
        dataType: 'json',
+       beforeSend: addRequestHeader(),
        success: (hasil) => {
            id_temp = id;
            console.log(id_temp);

@@ -1,7 +1,9 @@
+console.log(getLocalStorage());
 $('#myTable').DataTable( {
     ajax: {
         url: 'http://localhost:8081/employee',
-        dataSrc: 'data'
+        dataSrc: 'data',
+        beforeSend: addRequestHeader()
     },
     columns: [
                 { "data": "firstName"},
@@ -11,7 +13,7 @@ $('#myTable').DataTable( {
                 { "data": "department.name" },
                 { "data": "projects[].name" },
                 { "data": "id",
-                  render : function ( data, type, row, meta ) {
+                  "render" : function ( data, type, row, meta ) {
                     return ` <button
                                 class="btn btn-sm btn-primary p-2 mr-2"
                                 data-bs-toggle="modal" data-bs-target="#exampleModal"
@@ -32,7 +34,7 @@ $('#myTable').DataTable( {
                                     <i class="fa fa-sm fa-trash"></i>
                                 </button> `
 
-                  }
+                    }
                 }
 
     ]
@@ -49,6 +51,7 @@ function getAllDepartment() {
         url: 'http://localhost:8081/department',
         type: 'GET',
         dataType: 'json',
+        beforeSend: addRequestHeader(),
         success: (res) => {
             let row = null;
             let data = res.data;
@@ -66,6 +69,7 @@ function getAllProject() {
         url: 'http://localhost:8081/project',
         type: 'GET',
         dataType: 'json',
+        beforeSend: addRequestHeader(),
         success: (res) => {
             let row = null;
             let data = res.data;
@@ -97,7 +101,6 @@ function disable_ajax(_condition){
 
 
 function create(){
-//    temp = null;
     setForm({});
     disable_ajax(false);
 }
@@ -118,7 +121,7 @@ function submit() {
                         type: "PUT",
                         url: 'http://localhost:8081/employee/'+ id_temp,
                         contentType: 'application/json',
-                        data: JSON.stringify(temp), //Membuat jadi string, karena tidak bisa langsung dibaca
+                        data: JSON.stringify(temp),
                         dataType: 'json',
                         success: (data) => {
                              $(".modal").modal('hide');
@@ -135,7 +138,7 @@ function submit() {
             type: "POST",
             url: 'http://localhost:8081/employee',
             contentType: 'application/json',
-            data: JSON.stringify(temp), //Membuat jadi string, karena tidak bisa langsung dibaca
+            data: JSON.stringify(temp),
             dataType: 'json',
             success: (data) => {
                  $(".modal").modal('hide');
@@ -157,10 +160,9 @@ function setValue() {
     temp.address = $('#validationCustom03').val();
     temp.email = $('#validationEmail').val();
     temp.department = $('#validationCustom04').val();
-//    temp.projects = $('#validationCustom05').val();
 }
 
-function details(id) //Get By Id
+function details(id)
 {
    getId_ajax(id);
    disable_ajax(true);
@@ -172,6 +174,7 @@ function getId_ajax(id)
     $.ajax({
        url: "http://localhost:8081/employee/"+ id,
        dataType: 'json',
+       beforeSend: addRequestHeader(),
        success: (hasil) => {
            id_temp = id;
            console.log(id_temp);
@@ -184,7 +187,6 @@ function getId_ajax(id)
        }
    });
 }
-
 
 function setForm() {
     $('#validationCustom01').val(temp.firstName);

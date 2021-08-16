@@ -130,16 +130,6 @@
                         <th>Action</th>
                     </tr>
                     </thead>
-                    <!--                <tr th:each="employee : ${employees.data}">-->
-                    <!--                    <td th:text="${employee.firstName}"></td>-->
-                    <!--                    <td th:text="${employee.lastName}"></td>-->
-                    <!--                    <td th:text="${employee.email}"></td>-->
-                    <!--                    <td th:text="${employee.address}"></td>-->
-                    <!--                    <td th:text="${employee.department['name']}"></td>-->
-                    <!--                    <td th:each="project: ${employee.projects}">-->
-                    <!--                        <p th:text="${project.name}"></p>-->
-                    <!--                    </td>-->
-                    <!--                </tr>-->
                 </table>
             </div>
         </div>
@@ -147,9 +137,10 @@
 </div>
 
 <div th:replace="item/footer :: footers"></div>
-
 <div th:replace="item/footer :: jav_script"></div>
+<script src="/js/auth.js"></script>
 <script  src="/js/ajaxEmployee.js"></script>
+
 </body>
 
 </html>

@@ -54,3 +54,4 @@ function call_toast(_icon,_word){
                       title: _word
                     })
 };
+

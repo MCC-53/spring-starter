@@ -40,8 +40,4 @@ public class AppUserController{
         }
     }
 
-//    @PostMapping("/login")
-//    public ResponseEntity<ResponseMessage<AppUser>>login(@RequestBody LoginDTO loginDTO){
-//
-//    }
 }

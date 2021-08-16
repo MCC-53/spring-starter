@@ -2,10 +2,15 @@ package com.coba.client.controller;
 
 import com.coba.client.models.Employee;
 import com.coba.client.services.EmployeeService;
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.nio.charset.Charset;
 
 @Controller
 @RequestMapping("/employee")
@@ -19,7 +24,6 @@ public class EmployeeController {
 
     @GetMapping
     public String getAll(Model model){
-        employeeService.getAlll().getData();
         return "employee/view";
     }
 
@@ -36,4 +40,7 @@ public class EmployeeController {
         return "redirect:/employee";
     }
 
+
 }
+
+

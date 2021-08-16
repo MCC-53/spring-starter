@@ -21,7 +21,7 @@ public class Role {
     private List<AppUser> appUsers;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "role_previlage",
             joinColumns = @JoinColumn(name = "role_id"),

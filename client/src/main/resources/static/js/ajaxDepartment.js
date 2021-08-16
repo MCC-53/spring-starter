@@ -1,7 +1,7 @@
 $('#myTable').DataTable( {
     ajax: {
         url: 'http://localhost:8081/department',
-        dataSrc: 'data'
+        dataSrc: 'data',
     },
     columns: [
                 { "data": "name"},

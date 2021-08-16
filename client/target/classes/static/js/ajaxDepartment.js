@@ -1,32 +1,32 @@
 $('#myTable').DataTable( {
     ajax: {
         url: 'http://localhost:8081/department',
-        dataSrc: 'data'
+        dataSrc: 'data',
     },
     columns: [
                 { "data": "name"},
                 { "data": "id",
                   render : function ( data, type, row, meta ) {
                     return ` <button
-                                                                        class="btn btn-sm btn-primary p-2 mr-2"
-                                                                        data-bs-toggle="modal"
-                                                                        data-bs-target="#exampleModal"
-                                                                        onclick="details(${data})"
-                                                                     >
-                                                                            <i class="fa fa-sm fa-eye"></i>
-                                                                        </button>
-                                                                        <button class="btn btn-sm btn-warning text-white p-2 mr-2"
-                                                                                data-bs-toggle="modal"
-                                                                                data-bs-target="#exampleModal"
-                                                                                onclick="updates(${data})"
-                                                                                >
-                                                                            <i class="fa fa-sm fa-edit"></i>
-                                                                        </button>
-                                                                        <button class="btn btn-sm btn-danger p-2 mr-2"
-                                                                                onclick="ajaxDel(${data})"
-                                                                                >
-                                                                            <i class="fa fa-sm fa-trash"></i>
-                                                                        </button> `
+                                class="btn btn-sm btn-primary p-2 mr-2"
+                                data-bs-toggle="modal"
+                                data-bs-target="#exampleModal"
+                                onclick="details(${data})"
+                             >
+                                    <i class="fa fa-sm fa-eye"></i>
+                                </button>
+                                <button class="btn btn-sm btn-warning text-white p-2 mr-2"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#exampleModal"
+                                        onclick="updates(${data})"
+                                        >
+                                    <i class="fa fa-sm fa-edit"></i>
+                                </button>
+                                <button class="btn btn-sm btn-danger p-2 mr-2"
+                                        onclick="ajaxDel(${data})"
+                                        >
+                                    <i class="fa fa-sm fa-trash"></i>
+                            </button> `
 
                   }
                 }
@@ -59,15 +59,14 @@ function updates(id){
 function submit() {
     $('form').submit((e) => {
         e.preventDefault();
-        setValue();
-//        console.log(tempValue());
+        setValue();s
         if(id_temp){
             console.log("id: ",id_temp);
             $.ajax({
                         type: "PUT",
                         url: 'http://localhost:8081/department/'+ id_temp,
                         contentType: 'application/json',
-                        data: JSON.stringify(temp), //Membuat jadi string, karena tidak bisa langsung dibaca
+                        data: JSON.stringify(temp),
                         dataType: 'json',
                         success: (data) => {
                              $(".modal").modal('hide');
@@ -84,7 +83,7 @@ function submit() {
             type: "POST",
             url: 'http://localhost:8081/department',
             contentType: 'application/json',
-            data: JSON.stringify(temp), //Membuat jadi string, karena tidak bisa langsung dibaca
+            data: JSON.stringify(temp),
             dataType: 'json',
             success: (data) => {
                  $(".modal").modal('hide');
@@ -100,7 +99,7 @@ function submit() {
     });
 }
 
-function details(id) //Get By Id
+function details(id)
 {
    getId_ajax(id);
    disable_ajax(true);

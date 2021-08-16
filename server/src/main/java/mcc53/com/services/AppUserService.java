@@ -2,6 +2,7 @@ package mcc53.com.services;
 
 import mcc53.com.models.Department;
 import mcc53.com.models.Employee;
+import mcc53.com.models.SendEmail;
 import mcc53.com.models.auth.AppUser;
 import mcc53.com.models.dto.RegisterDTO;
 import mcc53.com.repositories.AppUserRepository;
@@ -12,20 +13,23 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.context.Context;
 
 @Service
 public class AppUserService implements UserDetailsService {
     private EmployeeRepository employeeRepository;
+    private AppUserRepository appUserRepository;
+    private BcryptEncode bcryptEncode;
+    private SendEmailService sendEmailService;
 
     @Autowired
-    public AppUserService(EmployeeRepository employeeRepository, AppUserRepository appUserRepository, BcryptEncode bcryptEncode) {
+    public AppUserService(EmployeeRepository employeeRepository, AppUserRepository appUserRepository, BcryptEncode bcryptEncode, SendEmailService sendEmailService) {
         this.employeeRepository = employeeRepository;
         this.appUserRepository = appUserRepository;
         this.bcryptEncode = bcryptEncode;
+        this.sendEmailService = sendEmailService;
     }
 
-    private AppUserRepository appUserRepository;
-    private BcryptEncode bcryptEncode;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -53,13 +57,18 @@ public class AppUserService implements UserDetailsService {
             user.setPassword(encodePass);
             user.setEmployee(employeeRepository.save(employee));
             appUserRepository.save(user);
+
+            SendEmail sendEmail = new SendEmail();
+            sendEmail.setTo(registerDTO.getEmail());
+            sendEmail.setSubject("Selamat Anda Terdaftar");
+            sendEmailService.sendSimpleMessage(sendEmail, registerContext(registerDTO));
             return registerDTO;
         }
     }
 
-    //Login
-//    public LoginDTO registerAppUser(LoginDTO loginDTO){
-//
-//    }
-
+    private Context registerContext(RegisterDTO registerDTO) {
+        Context context = new Context();
+        context.setVariable("fullName", registerDTO.getFirstName()+" "+registerDTO.getLastName());
+        return context;
+    }
 }

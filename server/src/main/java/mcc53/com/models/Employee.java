@@ -53,12 +53,11 @@ public class Employee {
     @Basic(optional = true)
     private String address;
 
-//    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @ManyToOne
     @JoinColumn(name = "department_id", nullable = false)
     private Department department;
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @JsonProperty()
     @ManyToMany
     @JoinTable(
             name = "employee_project",

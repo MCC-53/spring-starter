@@ -11,60 +11,48 @@
   <link rel="shortcut icon" href="#">
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
-<!--  <div th:include=":: #scripDepart">-->
-<!--      <script src="cobacoba" ></script>-->
-<!--  </div>-->
-<!--  <script src="/js/ajaxReq.js"></script>-->
 </head>
 
+<div class="dashboard-header" th:fragment="navbars">
+  <nav class="navbar navbar-expand-lg fixed-top">
+    <a class="navbar-brand" href="#">Department</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse " id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto navbar-right-top">
+        <li class="nav-item dropdown nav-user">
+          <a class="nav-link nav-user-img"th:href="@{/auth/logout}" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-sign-out-alt" style="color:white;font-size:25px;"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    </li>
+    </ul>
+</div>
+</nav>
+</div>
 
-  <!-- ============================================================== -->
-  <!-- navbar -->
-  <!-- ============================================================== -->
-  <div class="dashboard-header" th:fragment="navbars">
-    <nav class="navbar navbar-expand-lg fixed-top">
-      <a class="navbar-brand" href="#">Department</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+<div class="nav-left-sidebar sidebar" th:fragment="sidebars">
+  <div class="menu-list">
+    <nav class="navbar navbar-expand-lg navbar-light">
+      <a class="d-xl-none d-lg-none" th:href="@{/department}">Dashboard</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse " id="navbarSupportedContent">
-        <ul class="navbar-nav ml-auto navbar-right-top">
-          <li class="nav-item dropdown nav-user">
-            <a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <img src="image/admin.jpg" alt="" class="user-avatar-md rounded-circle" width="40" height="40"></a>
-            <div class="dropdown-menu dropdown-menu-right nav-user-dropdown" aria-labelledby="navbarDropdownMenuLink2">
-              <a href="#"><i class="fas fa-power-off mr-2"></i>Logout</a>
-            </div>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav flex-column">
+          <li class="nav-divider">
+            MENU
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link mb-2" th:href="@{/department}"><i class="fa fa-fw fa-user-circle"></i>Department</a>
+            <a class="nav-link mb-2" th:href="@{/employee}"><i class="fas fa-shopping-cart"></i>Employee</a>
+            <a class="nav-link mb-2" href="#"><i class="fas fa-ticket-alt"></i>Project</a>
           </li>
         </ul>
       </div>
     </nav>
   </div>
-  <!-- ============================================================== -->
-  <!-- end navbar -->
-  <!-- ============================================================== -->
-  <!-- ============================================================== -->
-  <!-- left sidebar -->
-  <!-- ============================================================== -->
-  <div class="nav-left-sidebar sidebar" th:fragment="sidebars">
-    <div class="menu-list">
-      <nav class="navbar navbar-expand-lg navbar-light">
-        <a class="d-xl-none d-lg-none" th:href="@{/department}">Dashboard</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav flex-column">
-            <li class="nav-divider">
-              MENU
-            </li>
-            <li class="nav-item ">
-              <a class="nav-link mb-2" th:href="@{/department}"><i class="fa fa-fw fa-user-circle"></i>Department</a>
-              <a class="nav-link mb-2" th:href="@{/employee}"><i class="fas fa-shopping-cart"></i>Employee</a>
-              <a class="nav-link mb-2" href="#"><i class="fas fa-ticket-alt"></i>Project</a>
-            </li>
-          </ul>
-        </div>
-      </nav>
-    </div>
-  </div>
+</div>

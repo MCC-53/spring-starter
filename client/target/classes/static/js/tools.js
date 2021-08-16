@@ -31,31 +31,27 @@ function dataTable() {
         }).then((result) => {
           if (result.isConfirmed) {
             isi();
-//            Swal.fire(
-//              'Deleted!',
-//              'Your file has been deleted.',
-//              'success'
-//            )
           }
         })
 };
 
 
 
-       function call_toast(_icon,_word){
-            const Toast = Swal.mixin({
-                              toast: true,
-                              position: 'top-end',
-                              showConfirmButton: false,
-                              timer: 3000,
-                              timerProgressBar: true,
-                              didOpen: (toast) => {
-                                toast.addEventListener('mouseenter', Swal.stopTimer)
-                                toast.addEventListener('mouseleave', Swal.resumeTimer)
-                              }
-                            })
-                            Toast.fire({
-                              icon: _icon,
-                              title: _word
-                            })
-       };
+function call_toast(_icon,_word){
+    const Toast = Swal.mixin({
+                      toast: true,
+                      position: 'top-end',
+                      showConfirmButton: false,
+                      timer: 3000,
+                      timerProgressBar: true,
+                      didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                      }
+                    })
+                    Toast.fire({
+                      icon: _icon,
+                      title: _word
+                    })
+};
+

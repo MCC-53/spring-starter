@@ -5,11 +5,28 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="42eb4203-73d7-40dd-9e97-02421677a400" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/coba/client/config/WebSecurityConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/coba/client/controller/AuthController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/coba/client/controller/PageErrorsController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/coba/client/models/AuthResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/coba/client/models/Login.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/coba/client/models/Register.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/coba/client/services/LoginService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/js/ajaxDepartment.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/main/resources/static/js/ajaxEmployee.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/js/auth.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/js/login.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/main/resources/static/js/tools.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/auth/login.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/auth/register.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/errors/error-404.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/errors/error-500.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/coba/client/controller/DepartmentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/coba/client/controller/DepartmentController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/coba/client/controller/EmployeeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/coba/client/controller/EmployeeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/ajaxReq.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/del.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/ajaxDepartment.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/del.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/css/login.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/templates/department/view.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/department/view.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/templates/employee/view.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/employee/view.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/templates/item/footer.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/item/footer.html" afterDir="false" />
@@ -23,8 +40,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="HTML File" />
+        <option value="Class" />
       </list>
     </option>
   </component>

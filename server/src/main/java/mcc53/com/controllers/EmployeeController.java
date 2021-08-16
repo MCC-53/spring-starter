@@ -12,6 +12,7 @@ import mcc53.com.services.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -31,6 +32,7 @@ import javax.validation.Valid;
  */
 @RestController
 @RequestMapping("/employee")
+@PreAuthorize("hasAnyRole('ADMIN','USER')")
 public class EmployeeController {
 
     private EmployeeService employeeService;
@@ -40,6 +42,7 @@ public class EmployeeController {
         this.employeeService = employeeService;
     }
 
+    @PreAuthorize("hasAuthority('READ')")
     @GetMapping //Get All
     public ResponseEntity<ResponseMessage<List<Employee>>> getAlll() {
         ResponseMessage<List<Employee>> responseMessage = new ResponseMessage<>();
@@ -49,6 +52,7 @@ public class EmployeeController {
         return ResponseEntity.status(HttpStatus.OK).body(responseMessage);
     }
 
+    @PreAuthorize("hasAuthority('READ')")
     @GetMapping("/{id}") //Get By Id
     public ResponseEntity<ResponseMessage<Employee>> getById(@PathVariable("id") Long id) {
         ResponseMessage<Employee> responseMessage = new ResponseMessage<>();
@@ -57,7 +61,8 @@ public class EmployeeController {
         responseMessage.setData(employeeService.getById(id));
         return ResponseEntity.status(HttpStatus.OK).body(responseMessage);
     }
-    
+
+    @PreAuthorize("hasAuthority('CREATE')")
     @PostMapping //Post
     public ResponseEntity<ResponseMessage<Employee>> create(@Valid @RequestBody Employee employee, Errors errors) {
         ResponseMessage<Employee> responseMessage = new ResponseMessage<>();
@@ -76,7 +81,8 @@ public class EmployeeController {
             return ResponseEntity.status(HttpStatus.OK).body(responseMessage);
         }
     }
-    
+
+    @PreAuthorize("hasAuthority('UPDATE')")
     @PutMapping("/{id}") //Update
     public ResponseEntity<ResponseMessage<Employee>> update(@Valid @PathVariable("id") Long id,
             @RequestBody Employee employee, Errors errors) {
@@ -100,7 +106,8 @@ public class EmployeeController {
 
         }
     }
-    
+
+    @PreAuthorize("hasAuthority('DELETE')")
     @DeleteMapping("/{id}") //Delete
     public ResponseEntity<Employee> delete(@PathVariable("id") Long id) {
         return new ResponseEntity(employeeService.delete(id), HttpStatus.OK);

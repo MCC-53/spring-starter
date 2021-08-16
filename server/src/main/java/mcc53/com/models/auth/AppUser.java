@@ -54,7 +54,7 @@ public class AppUser implements UserDetails {
     private Employee employee;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_role",
             joinColumns = @JoinColumn(name = "user_auth_id"),
@@ -67,9 +67,9 @@ public class AppUser implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority>authority = new ArrayList<>();//Inisialiasikan List dengan type GrantedAuth untuk menyimpan rolesnya
         for(Role role:getRoles()){ //Kita cocokkan role dengan role yang di role didatabase AppUser
-            authority.add(new SimpleGrantedAuthority(role.getName()));//Jika ada masukkan kedalam list authority
+            authority.add(new SimpleGrantedAuthority("ROLE_"+role.getName().toUpperCase()));//Jika ada masukkan kedalam list authority
             for(Previlage previlage: role.getPrevilages()){
-                authority.add(new SimpleGrantedAuthority(previlage.getName()));
+                authority.add(new SimpleGrantedAuthority(previlage.getName().toUpperCase()));
             }
         }
         return authority;
