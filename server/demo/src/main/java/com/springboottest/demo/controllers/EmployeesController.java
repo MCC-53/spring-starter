@@ -33,37 +33,37 @@ public class EmployeesController {
         this.employeesService = employeesService;
     }
     @GetMapping
-    //@PreAuthorize("hasAuthority('READ_ALL_EMPLOYEES')")
+    @PreAuthorize("hasAuthority('READ_ALL_EMPLOYEES')")
     public ResponseEntity<List<Employees>> getAll() {
         return new ResponseEntity(employeesService.getAll(), HttpStatus.OK);
     }
     @GetMapping("/{id}")
-    //@PreAuthorize("hasAuthority('READ_EMPLOYEE_BY_ID')")
+    @PreAuthorize("hasAuthority('READ_EMPLOYEE_BY_ID')")
     public ResponseEntity<Employees> getById(@PathVariable("id") Long id) {
         return new ResponseEntity(employeesService.getById(id), HttpStatus.OK);
     }
     @GetMapping("/get-employee-by-username")
-    //@PreAuthorize("hasAuthority('READ_EMPLOYEE_BY_USERNAME')")
+    @PreAuthorize("hasAuthority('READ_EMPLOYEE_BY_USERNAME')")
     public ResponseEntity<Employees> getById(Authentication authentication) {
         return new ResponseEntity(employeesService.getByEmail(authentication.getName()), HttpStatus.OK);
     }
     @GetMapping("/get-first-name/{first-name}")
-    //@PreAuthorize("hasAuthority('READ_EMPLOYEE_BY_FIRST_NAME')")
+    @PreAuthorize("hasAuthority('READ_EMPLOYEE_BY_FIRST_NAME')")
     public ResponseEntity<List<Employees>> getByEmployeesFirstName(@PathVariable("first-name") String firstName) {
         return new ResponseEntity(employeesService.getByEmployeesFirstName(firstName), HttpStatus.OK);
     }
     @PostMapping
-    //@PreAuthorize("hasAuthority('CREATE_EMPLOYEE')")
+    @PreAuthorize("hasAuthority('CREATE_EMPLOYEE')")
     public ResponseEntity<Employees> create(@RequestBody Employees employees) {
         return new ResponseEntity(employeesService.create(employees), HttpStatus.OK);
     }
     @PutMapping("/{id}")
-    //@PreAuthorize("hasAuthority('UPDATE_EMPLOYEE')")
+    @PreAuthorize("hasAuthority('UPDATE_EMPLOYEE')")
     public ResponseEntity<Employees> update(@PathVariable("id") Long id, @RequestBody Employees employees) {
         return new ResponseEntity(employeesService.update(id, employees), HttpStatus.OK);
     }
     @DeleteMapping("/{id}")
-    //@PreAuthorize("hasAuthority('DELETE_EMPLOYEE')")
+    @PreAuthorize("hasAuthority('DELETE_EMPLOYEE')")
     public ResponseEntity<Employees> delete(@PathVariable("id") Long id) {
         return new ResponseEntity(employeesService.delete(id), HttpStatus.OK);
     }

@@ -32,27 +32,27 @@ public class ProjectsController {
         this.projectsService = projectsService;
     }
     @GetMapping
-    //@PreAuthorize("hasAuthority('READ_ALL_PROJECTS')")
+    @PreAuthorize("hasAuthority('READ_ALL_PROJECTS')")
     public ResponseEntity<List<Projects>> getAll() {
         return new ResponseEntity(projectsService.getAll(), HttpStatus.OK);
     }
     @GetMapping("/{id}")
-    //@PreAuthorize("hasAuthority('READ_PROJECT_BY_ID')")
+    @PreAuthorize("hasAuthority('READ_PROJECT_BY_ID')")
     public ResponseEntity<Projects> getById(@PathVariable("id") Long id) {
         return new ResponseEntity(projectsService.getById(id), HttpStatus.OK);
     }
     @PostMapping
-    //@PreAuthorize("hasAuthority('CREATE_PROJECT')")
+    @PreAuthorize("hasAuthority('CREATE_PROJECT')")
     public ResponseEntity<Projects> create(@RequestBody Projects projects) {
         return new ResponseEntity(projectsService.create(projects), HttpStatus.OK);
     }
     @PutMapping("/{id}")
-    //@PreAuthorize("hasAuthority('UPDATE_PROJECT')")
+    @PreAuthorize("hasAuthority('UPDATE_PROJECT')")
     public ResponseEntity<Projects> update(@PathVariable("id") Long id, @RequestBody Projects projects) {
         return new ResponseEntity(projectsService.update(id, projects), HttpStatus.OK);
     }
     @DeleteMapping("/{id}")
-    //@PreAuthorize("hasAuthority('DELETE_PROJECT')")
+    @PreAuthorize("hasAuthority('DELETE_PROJECT')")
     public ResponseEntity<Projects> delete(@PathVariable("id") Long id) {
         return new ResponseEntity(projectsService.delete(id), HttpStatus.OK);
     }

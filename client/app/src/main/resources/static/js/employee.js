@@ -89,6 +89,7 @@ $(document).ready(function () {
         contentType: 'application/json',
         data: JSON.stringify(employeeData),
         dataType: 'json',
+        beforeSend: addRequestHeader(),
         success: (data) => {
             success('Employee created');
         }
@@ -106,6 +107,7 @@ $(document).ready(function () {
             contentType: 'application/json',
             data: JSON.stringify(employeeData),
             dataType: 'json',
+            beforeSend: addRequestHeader(),
             success: (data) => {
                 success('Employee updated!');
             }
@@ -117,6 +119,7 @@ $(document).ready(function () {
             url: `http://localhost:8081/users/delete-register/${id}`,
             type: 'DELETE',
             dataType: 'json',
+            beforeSend: addRequestHeader(),
             success: (data) => {
                 success('Employee deleted!');
             }
@@ -137,6 +140,7 @@ $(document).ready(function () {
         url: `http://localhost:8081/employees/${id}`,
         type: 'GET',
         dataType: 'json',
+        beforeSend: addRequestHeader(),
         success: (data) => {
             employee.firstName = data.firstName;
             employee.lastName = data.lastName;

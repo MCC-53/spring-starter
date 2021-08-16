@@ -1,6 +1,6 @@
 var data = $('#table').DataTable({
-    ajax: {
-        url: 'http://localhost:8081/employees',
+    ajax : {
+        url: '/employees/get-all',
         dataSrc: ''
     },
     "columns": [
@@ -159,11 +159,7 @@ var data = $('#table').DataTable({
             }
         }
     ]
-});
-//function dataTable() {
-//$('#table').DataTable();
-//}
-(function () {
+}); (function () {
     'use strict'
     var forms = document.querySelectorAll('.needs-validation');
     Array.prototype.slice.call(forms).forEach(function (form) {
@@ -171,11 +167,9 @@ var data = $('#table').DataTable({
             if (!form.checkValidity()) {
                 event.preventDefault()
                 event.stopPropagation()
-            }
-            form.classList.add('was-validated')
+            } form.classList.add('was-validated')
         }, false)
     })
-})()
-setInterval(function() {
+})(); setInterval(function() {
     data.ajax.reload(null, false);
 }, 1000);

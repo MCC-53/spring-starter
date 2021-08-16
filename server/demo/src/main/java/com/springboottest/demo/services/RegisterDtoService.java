@@ -7,6 +7,7 @@ package com.springboottest.demo.services;
 import com.springboottest.demo.models.Departments;
 import com.springboottest.demo.models.Employees;
 import com.springboottest.demo.models.RegisterDto;
+import com.springboottest.demo.models.SendEmail;
 import com.springboottest.demo.models.Users;
 import com.springboottest.demo.repositories.EmployeesRepository;
 import com.springboottest.demo.repositories.ProjectsRepository;
@@ -15,6 +16,7 @@ import com.springboottest.demo.repositories.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.context.Context;
 /**
  *
  * @author ACER
@@ -27,14 +29,16 @@ public class RegisterDtoService {
     private ProjectsRepository projectsRepository;
     private RolesRepository rolesRepository;
     private PasswordEncoder passwordEncoder;
+    private SendEmailService sendEmailService;
     @Autowired
-    public RegisterDtoService(EmployeesRepository employeesRepository, UsersRepository usersRepository, PasswordEncoder passwordEncoder, EmployeesService employeesService, ProjectsRepository projectsRepository, RolesRepository rolesRepository) {
+    public RegisterDtoService(EmployeesRepository employeesRepository, UsersRepository usersRepository, PasswordEncoder passwordEncoder, EmployeesService employeesService, ProjectsRepository projectsRepository, RolesRepository rolesRepository, SendEmailService sendEmailService) {
         this.employeesRepository = employeesRepository;
         this.usersRepository = usersRepository;
         this.passwordEncoder = passwordEncoder;
         this.employeesService = employeesService;
         this.projectsRepository = projectsRepository;
         this.rolesRepository = rolesRepository;
+        this.sendEmailService = sendEmailService;
     } public RegisterDto createRegister(RegisterDto registerDto) {
         Employees employees = Employees.builder()
                 .email(registerDto.getEmail())
@@ -57,6 +61,11 @@ public class RegisterDtoService {
                 .roles(registerDto.getRoles())
                 .build();
         usersRepository.save(users);
+        SendEmail sendEmail = SendEmail.builder()
+                .subject("Verifikasi Email")
+                .to(registerDto.getEmail())
+                .build();
+        sendEmailService.sendSimpleMessage(sendEmail, registerContext(registerDto));
         return registerDto;
     } public RegisterDto update(Long id, RegisterDto registerDto) {
         Employees employeesTemp = employeesService.getById(id);
@@ -91,5 +100,9 @@ public class RegisterDtoService {
         usersRepository.deleteById(employees.getId());
         employeesService.delete(id);
         return new RegisterDto();
+    } public Context registerContext(RegisterDto registerDto) {
+        Context context = new Context();
+        context.setVariable("fullname", registerDto.getFirstName() + " " + registerDto.getLastName());
+        return context;
     }
 }

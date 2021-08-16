@@ -13,8 +13,17 @@
         "th:onclick": {
             "context": "button"
         },
+        "th:action": {
+            "context": "form"
+        },
+        "sec:authorize": {
+            "context": "li"
+        },
         "th:fragment": {
             "context": "div"
+        },
+        "th:field": {
+            "context": "input"
         }
     }
 }

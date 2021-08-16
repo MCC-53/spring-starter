@@ -41,16 +41,17 @@ public class UsersController {
         this.authService = authService;
     }
     @GetMapping("/get-user-by-username")
-    //@PreAuthorize("hasAuthority('READ_USER_BY_USERNAME')")
+    @PreAuthorize("hasAuthority('READ_USER_BY_USERNAME')")
     public ResponseEntity<Users> getById(Authentication authentication) {
         return new ResponseEntity(userService.getByUsername(authentication.getName()), HttpStatus.OK);
     }
     @PostMapping
-    //@PreAuthorize("hasAuthority('CREATE_USER')")
+    @PreAuthorize("hasAuthority('CREATE_USER')")
     public ResponseEntity<Users> create(@RequestBody Users users) {
         return new ResponseEntity(userService.create(users), HttpStatus.OK);
     }
     @PostMapping("/create-register")
+    @PreAuthorize("hasAuthority('CREATE_USER')")
     public ResponseEntity<RegisterDto> createRegister(@RequestBody RegisterDto registerDto) {
         return new ResponseEntity(registerDtoService.createRegister(registerDto), HttpStatus.OK);
     }
@@ -59,10 +60,12 @@ public class UsersController {
         return new ResponseEntity(authService.authUserLogin(authRequest), HttpStatus.OK);
     }
     @PutMapping("/update-register/{id}")
+    @PreAuthorize("hasAuthority('UPDATE_USER')")
     public ResponseEntity<RegisterDto> updateRegister(@PathVariable Long id, @RequestBody RegisterDto registerDto) {
         return new ResponseEntity(registerDtoService.update(id, registerDto), HttpStatus.OK);
     }
     @DeleteMapping("/delete-register/{id}")
+    @PreAuthorize("hasAuthority('DELETE_USER')")
     public ResponseEntity<RegisterDto> deleteRegister(@PathVariable Long id) {
         return new ResponseEntity(registerDtoService.delete(id), HttpStatus.OK);
     }

@@ -7,6 +7,7 @@ $(document).ready(function () {
         url: '/departments/get-all',
         type: 'GET',
         dataType: 'json',
+        beforeSend: addRequestHeader(),
         success: (res) => {
             let row = null;
             res.forEach((data) => {
@@ -44,6 +45,7 @@ $(document).ready(function () {
             contentType: 'application/json',
             data: JSON.stringify(department),
             dataType: 'json',
+            beforeSend: addRequestHeader(),
             success: (data) => {
                 success('Department created');
             }
@@ -71,6 +73,7 @@ $(document).ready(function () {
             contentType: 'application/json',
             data: JSON.stringify(department),
             dataType: 'json',
+            beforeSend: addRequestHeader(),
             success: (data) => {
                 success('Department updated!');
             }
@@ -82,6 +85,7 @@ $(document).ready(function () {
             url: `/departments/delete/${id}`,
             type: 'DELETE',
             dataType: 'json',
+            beforeSend: addRequestHeader(),
             success: (data) => {
                 success('Department deleted!');
             }
@@ -92,6 +96,7 @@ $(document).ready(function () {
         url: `/departments/get-by-id/${id}`,
         type: 'GET',
         dataType: 'json',
+        beforeSend: addRequestHeader(),
         success: (data) => {
             department.id = data.id;
             department.name = data.name;

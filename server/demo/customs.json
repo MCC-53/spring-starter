@@ -1,1 +1,11 @@
-{"elements":{},"attributes":{"th:text":{"context":"h1"}}}
+{
+    "elements": {},
+    "attributes": {
+        "th:text": {
+            "context": "h1"
+        },
+        "integrity": {
+            "context": "link"
+        }
+    }
+}

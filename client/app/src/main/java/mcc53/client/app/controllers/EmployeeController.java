@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package mcc53.client.app.controllers;
+import java.util.List;
 import mcc53.client.app.models.EmployeeData;
 import mcc53.client.app.models.EmployeeDto;
 import mcc53.client.app.models.ProjectData;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 /**
  *
  * @author ACER
@@ -44,6 +46,10 @@ public class EmployeeController {
         model.addAttribute("projects", projectService.getAll());
         model.addAttribute("roles", roleService.getAll());
         return "employee/get-all";
+    }
+    @GetMapping("/get-all")
+    public @ResponseBody List<EmployeeData<ProjectData>> getAll() {
+        return employeeService.getAll();
     }
     @GetMapping("/{id}")
     public String getById(@PathVariable("id") Integer id, Model model) {
