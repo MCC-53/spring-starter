@@ -51,15 +51,8 @@ public class SeedDataEntity implements CommandLineRunner {
             seedPrivilegeAuthority(READ_EMPLOYEE);
             seedPrivilegeAuthority(UPDATE_EMPLOYEE);
             seedPrivilegeAuthority(DELETE_EMPLOYEE);
+            seedPrivilegeAuthority(CREATE_EMPLOYEE_PROJECTS);
         }
-    }
-
-    private void seedPrivilegeAuthority(PrivilegeAuthority privilegeAuthority) {
-        Privilege privilege = Privilege
-                .builder()
-                .name(privilegeAuthority)
-                .build();
-        privilegeRepository.save(privilege);
     }
 
     public void seedDataRole() {
@@ -82,6 +75,7 @@ public class SeedDataEntity implements CommandLineRunner {
         adminPrivilegeAddition(adminPrivilegeSet, UPDATE_PROJECT);
         adminPrivilegeAddition(adminPrivilegeSet, DELETE_PROJECT);
         adminPrivilegeAddition(adminPrivilegeSet, READ_EMPLOYEE);
+        adminPrivilegeAddition(adminPrivilegeSet, CREATE_EMPLOYEE_PROJECTS);
 
         if (roleRepository.count() == 0) {
             Role roleUser = Role
@@ -100,11 +94,23 @@ public class SeedDataEntity implements CommandLineRunner {
         }
     }
 
+    private void seedPrivilegeAuthority(PrivilegeAuthority privilegeAuthority) {
+        Privilege privilege = Privilege
+                .builder()
+                .name(privilegeAuthority)
+                .build();
+        privilegeRepository.save(privilege);
+    }
+
+
+
     private void userPrivilegeAddition(Set<Privilege> userPrivilegeSet, PrivilegeAuthority privilegeAuthority) {
-        userPrivilegeSet.add(privilegeRepository.findPrivilegeByName(privilegeAuthority).orElseThrow(() -> new ApiException("Privilege not found!", HttpStatus.NOT_FOUND)));
+        userPrivilegeSet.add(privilegeRepository.findPrivilegeByName(privilegeAuthority)
+                .orElseThrow(() -> new ApiException("Privilege not found!", HttpStatus.NOT_FOUND)));
     }
 
     private void adminPrivilegeAddition(Set<Privilege> adminPrivilegeSet, PrivilegeAuthority privilegeAuthority) {
-        adminPrivilegeSet.add(privilegeRepository.findPrivilegeByName(privilegeAuthority).orElseThrow(() -> new ApiException("Privilege not found!", HttpStatus.NOT_FOUND)));
+        adminPrivilegeSet.add(privilegeRepository.findPrivilegeByName(privilegeAuthority)
+                .orElseThrow(() -> new ApiException("Privilege not found!", HttpStatus.NOT_FOUND)));
     }
 }

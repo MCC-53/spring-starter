@@ -2,43 +2,35 @@ var department = {};
 var dataId = '';
 
 $(document).ready(function () {
-    var table = $('#table').DataTable({
+    $('#table').DataTable({
         ajax: {
             url: 'http://localhost:8087/api/department',
             dataSrc: 'content'
         },
-        "columns": [
-            {
-                "name": "Id",
-                "data": "id"
-            },
-            {
-                "name": "Department Name",
-                "data": "name"
-            },
-            {
-                "name": "Action",
-                "data": "id",
-                "render": function (data, type, row, meta) {
+        columns: [
+            { "data": "id"},
+            { "data": "name"},
+            { "data": "id",
+                render: function (data, type, row, meta) {
                     return `
                        <div class="action-button">
                                     <button 
-                                        class="btn btn-sm btn-primary"
+                                        class="btn btn-sm btn-outline-primary"
                                         data-bs-toggle="modal"
                                         data-bs-target="#departmentModal"
-                                        onclick="detail(${data.id})">
+                                        onclick="detail('${data}')">
                                         <i class="fa fa-sm fa-eye"></i>
                                     </button>
                                     <button
-                                        class="btn btn-sm btn-warning text-white"
+                                        class="btn btn-sm btn-outline-warning"
                                         data-bs-toggle="modal"
                                         data-bs-target="#departmentModal"
-                                        onclick="edit(${data.id})">
+                                        onclick="edit('${data}')">
                                         <i class="fa fa-sm fa-edit"></i>
                                     </button>
                                     <button 
-                                        class="btn btn-sm btn-danger"
-                                        onclick="deleteById(${data.id})">
+                                        class="btn btn-sm btn-outline-danger"
+                                        onclick="deleteById('${data}')">
                                         <i class="fa fa-sm fa-trash"></i>
                                     </button>
                                 </div>
@@ -73,12 +65,12 @@ function submit() {
                     contentType: 'application/json',
                     data: JSON.stringify(department),
                     dataType: 'json',
-                    success: data => {
+                    success: () => {
                         $(".modal").modal('hide');
                         success('Department successfully updated');
-                        data.ajax.reload(null, false);
+                        $('#table').DataTable().ajax.reload(null, false);
                     },
-                    error: data => {
+                    error: () => {
                         error("Department cant be update")
                     }
                 });
@@ -89,12 +81,12 @@ function submit() {
                     contentType: 'application/json',
                     data: JSON.stringify(department),
                     dataType: 'json',
-                    success: data => {
+                    success: () => {
                         $(".modal").modal('hide');
                         success('Department successfully created');
-                        data.ajax.reload(null, false);
+                        $('#table').DataTable().ajax.reload(null, false);
                     },
-                    error: data => {
+                    error: () => {
                         error("Department cant be create")
                     }
                 });
@@ -128,9 +120,9 @@ function deleteById(id) {
                 dataType: 'json',
                 success: data => {
                     success('department deleted');
-                    data.ajax.reload(null, false)
+                    $('#table').DataTable().ajax.reload(null, false);
                 },
-                error: data => {
+                error: () => {
                     error("Department cant be delete");
                 }
             })

@@ -21,6 +21,7 @@ public class ProjectController {
     }
 
     @PostMapping("/project")
+//    @PreAuthorize("hasAuthority('CREATE_PROJECT')")
     public ResponseEntity<Object> createProject(@RequestBody ProjectRequest projectRequest) {
         return new ResponseEntity<>(
                 new ApiResponse("Successfully created project data",
@@ -29,6 +30,7 @@ public class ProjectController {
     }
 
     @GetMapping("/project")
+//    @PreAuthorize("hasAuthority('READ_PROJECT')")
     public ResponseEntity<Object> readAllProject() {
         return new ResponseEntity<>(
                 new ApiResponse("Successfully read all project data",
@@ -37,6 +39,7 @@ public class ProjectController {
     }
 
     @GetMapping("/project/{id}")
+//    @PreAuthorize("hasAuthority('READ_PROJECT')")
     public ResponseEntity<Object> readProjectById(@PathVariable String id) {
         return new ResponseEntity<>(
                 new ApiResponse("Successfully read project data by id",
@@ -45,6 +48,7 @@ public class ProjectController {
     }
 
     @GetMapping("/project-employee/{employeeId}")
+//    @PreAuthorize("hasAuthority('READ_PROJECT')")
     public ResponseEntity<Object> readProjectByEmployeeId(@PathVariable String employeeId) {
         return new ResponseEntity<>(
                 new ApiResponse("Successfully read project data by employee id",
@@ -53,6 +57,7 @@ public class ProjectController {
     }
 
     @PutMapping("/project/{id}")
+//    @PreAuthorize("hasAuthority('UPDATE_PROJECT')")
     public ResponseEntity<Object> updateProjectById(@PathVariable String id,
                                                     @RequestBody ProjectRequest projectRequest) {
         return new ResponseEntity<>(
@@ -62,6 +67,7 @@ public class ProjectController {
     }
 
     @DeleteMapping("/project/{id}")
+//    @PreAuthorize("hasAuthority('DELETE_PROJECT')")
     public ResponseEntity<Object> deleteProjectById(@PathVariable String id) {
         projectService.deleteProjectById(id);
 

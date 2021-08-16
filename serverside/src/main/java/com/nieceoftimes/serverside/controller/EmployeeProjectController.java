@@ -6,6 +6,7 @@ import com.nieceoftimes.serverside.util.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("api/employee-project")
+//@PreAuthorize("hasAnyRole('ADMIN', 'USER')")
 public class EmployeeProjectController {
     private EmployeeProjectServiceImpl employeeProjectService;
 
@@ -22,6 +24,7 @@ public class EmployeeProjectController {
     }
 
     @PostMapping
+//    @PreAuthorize("hasAuthority('CREATE_EMPLOYEE_PROJECTS')")
     public ResponseEntity<Object> createEmployeeProject(@RequestBody EmployeeProjectRequest employeeProjectRequest) {
         return new ResponseEntity<>(
                 new ApiResponse("Successfully created employee project",

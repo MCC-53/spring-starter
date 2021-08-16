@@ -22,6 +22,7 @@ public class EmployeeController {
     }
 
     @GetMapping
+//    @PreAuthorize("hasAuthority('READ_EMPLOYEE')")
     public ResponseEntity<Object> readAllEmployee() {
         return new ResponseEntity<>(
                 new ApiResponse("Successfully read all data employee",
@@ -30,6 +31,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/{id}")
+//    @PreAuthorize("hasAuthority('READ_EMPLOYEE')")
     public ResponseEntity<Object> readEmployeeById(@PathVariable String id) {
         return new ResponseEntity<>(
                 new ApiResponse("Successfully read employee data by id",
@@ -38,6 +40,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/department/{departmentId}")
+//    @PreAuthorize("hasAuthority('READ_EMPLOYEE')")
     public ResponseEntity<Object> readEmployeeByDepartmentId(@PathVariable String departmentId) {
         return new ResponseEntity<>(
                 new ApiResponse("Successfully read employee data by department id",
@@ -46,6 +49,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/project/{projectId}")
+//    @PreAuthorize("hasAuthority('READ_EMPLOYEE')")
     public ResponseEntity<Object> readEmployeeByProjectId(@PathVariable String projectId) {
         return new ResponseEntity<>(
                 new ApiResponse("Successfully read employee data by project id",
@@ -54,6 +58,7 @@ public class EmployeeController {
     }
 
     @PutMapping("/{id}")
+//    @PreAuthorize("hasAuthority('UPDATE_EMPLOYEE')")
     public ResponseEntity<Object> updateEmployeeById(@PathVariable String id,
                                                      @RequestBody EmployeeUpdateRequest employeeUpdateRequest) {
         return new ResponseEntity<>(
@@ -63,6 +68,7 @@ public class EmployeeController {
     }
 
     @DeleteMapping("/{id}")
+//    @PreAuthorize("hasAuthority('DELETE_EMPLOYEE')")
     public ResponseEntity<Object> deleteEmployeeById(@PathVariable String id) {
         employeeService.deleteEmployeeById(id);
 

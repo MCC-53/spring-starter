@@ -21,6 +21,7 @@ public class DepartmentController {
     }
 
     @PostMapping
+//    @PreAuthorize("hasAuthority('CREATE_DEPARTMENT')")
     public ResponseEntity<Object> createDepartment(@RequestBody DepartmentRequest departmentRequest) {
         return new ResponseEntity<>(
                 new ApiResponse("Successfully created data",
@@ -29,6 +30,7 @@ public class DepartmentController {
     }
 
     @GetMapping
+//    @PreAuthorize("hasAuthority('READ_DEPARTMENT')")
     public ResponseEntity<Object> readAllDepartment() {
         return new ResponseEntity<>(
                 new ApiResponse("Successfully read all data department",
@@ -37,6 +39,7 @@ public class DepartmentController {
     }
 
     @GetMapping("/{id}")
+//    @PreAuthorize("hasAuthority('READ_DEPARTMENT')")
     public ResponseEntity<Object> readDepartmentById(@PathVariable String id) {
         return new ResponseEntity<>(
                 new ApiResponse("Successfully read department by id",
@@ -45,6 +48,7 @@ public class DepartmentController {
     }
 
     @GetMapping("/employee/{employeeId}")
+//    @PreAuthorize("hasAuthority('READ_DEPARTMENT')")
     public ResponseEntity<Object> readDepartmentByEmployeeId(@PathVariable String employeeId) {
         return new ResponseEntity<>(
                 new ApiResponse("Successfully read department by employee id",
@@ -53,6 +57,7 @@ public class DepartmentController {
     }
 
     @PutMapping("/{id}")
+//    @PreAuthorize("hasAuthority('UPDATE_DEPARTMENT')")
     public ResponseEntity<Object> updateDepartmentById(@PathVariable String id,
                                                        @RequestBody DepartmentRequest departmentRequest) {
         return new ResponseEntity<>(
@@ -62,6 +67,7 @@ public class DepartmentController {
     }
 
     @DeleteMapping("/{id}")
+//    @PreAuthorize("hasAuthority('DELETE_DEPARTMENT')")
     public ResponseEntity<Object> deleteDepartmentById(@PathVariable String id) {
         departmentService.deleteDepartmentById(id);
 

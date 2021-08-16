@@ -11,5 +11,6 @@ public enum PrivilegeAuthority {
     DELETE_PROJECT, // admin
     READ_EMPLOYEE, // admin user
     UPDATE_EMPLOYEE, // user
-    DELETE_EMPLOYEE // user
+    DELETE_EMPLOYEE, // user
+    CREATE_EMPLOYEE_PROJECTS // admin
 }

@@ -1,3 +1,4 @@
+<!doctype html>
 <html lang="en">
 <head th:replace="_layout :: head_layout">
     <meta charset="UTF-8">
@@ -17,8 +18,8 @@
                         <button class="btn btn-sm btn-primary"
                                 data-bs-toggle="modal"
                                 data-bs-target="#departmentModal"
-                                th:onclick="create()">
-                            <i class="fa fa-sm fa-plus"></i>&nbsp;Add brand new department
+                                onclick="create()">
+                            <i class="fa fa-sm fa-plus"></i>&nbsp;department
                         </button>
                     </div>
                     <br>
@@ -41,7 +42,7 @@
     <div class="modal fade" id="departmentModal"  aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="model-header">
+                <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Department Form</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -63,5 +64,6 @@
     </div>
 
     <div th:replace="_layout :: script"></div>
+    <script src="/js/department.js"></script>
 </body>
 </html>
