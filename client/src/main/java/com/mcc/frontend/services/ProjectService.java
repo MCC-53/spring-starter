@@ -29,6 +29,7 @@ public class ProjectService {
     @Autowired
     public ProjectService(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
+        
     }
     
     public List<Project> getAll(){

@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class DashboardController {
     
     @GetMapping
-    public String index() {
+    public String indexDashboard() {
         return "index";
     }
 }

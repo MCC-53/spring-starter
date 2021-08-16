@@ -11,6 +11,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/department")
+@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 public class DepartmentController {
     private DepartmentService departmentService;
 
@@ -35,6 +37,7 @@ public class DepartmentController {
     }
     
     @GetMapping
+    @PreAuthorize("hasAuthority('READ')")
     public ResponseEntity<List<Department>> getAllDataDepartment(){
         return new ResponseEntity(departmentService.getAllDepartment(), HttpStatus.OK);
     }
@@ -45,11 +48,13 @@ public class DepartmentController {
     }
     
     @PostMapping
+    @PreAuthorize("hasAuthority('CREATE')")
     public ResponseEntity<Department> createDataDepartment(@RequestBody Department d){
         return new ResponseEntity<>(departmentService.createDepartment(d), HttpStatus.OK);
     }
     
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('UPDATE')")
     public ResponseEntity<Department> updateDataDepartment(@PathVariable("id") Integer id,
             @RequestBody Department department){
         return new ResponseEntity<>(departmentService.updateDepartment(id, department), HttpStatus.OK);
@@ -57,6 +62,7 @@ public class DepartmentController {
     
     
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('DELETE')")
     public ResponseEntity<Department> deleteDataDepartment(@PathVariable("id") Integer id){
         return new ResponseEntity<>(departmentService.deleteDepartment(id), HttpStatus.OK);
     }

@@ -12,6 +12,7 @@ import com.mii.coba.models.request.LoginRequest;
 import com.mii.coba.repositories.UserRepository;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -50,12 +51,18 @@ public class LoginService {
         }
         
         boolean password = passwordEncoder.matches(loginRequest.getPassword(), user.getPassword());
+        
         if(password == true){
-            String dat = userDetailService.loadUserByUsername(loginRequest.getUsername()).getAuthorities().toString();
-            List<String> data = new ArrayList<>();
+            List <String> data = userDetailService.loadUserByUsername(loginRequest.getUsername()).getAuthorities()
+                    .stream()
+                    .map(auth -> auth.getAuthority())
+                    .collect(Collectors.toList());  
+            
+            
+//            List<String> data = new ArrayList<>();
 //                data.add(user.getUsername());
 //                data.add(user.getPassword());
-                data.add(dat);
+//                data.add(dat);
                 authResponse.setAuth(data);
                 return authResponse;
         }else{

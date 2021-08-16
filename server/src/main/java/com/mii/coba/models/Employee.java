@@ -52,7 +52,7 @@ public class Employee implements Serializable{
     @JoinColumn(name = "department_id", nullable = false)
     private Department department;
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+//    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToOne(mappedBy = "employee", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @PrimaryKeyJoinColumn
     private User user;

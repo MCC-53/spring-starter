@@ -9,10 +9,12 @@ import com.mii.coba.models.Department;
 import com.mii.coba.models.User;
 import com.mii.coba.models.request.RegisterDto;
 import com.mii.coba.models.Employee;
+import com.mii.coba.models.SendEmail;
 import com.mii.coba.repositories.EmployeeRepository;
 import com.mii.coba.repositories.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.context.Context;
 
 /**
  *
@@ -20,18 +22,20 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class RegisterService {
-    
+
     private UserRepository userRepository;
     private EmployeeRepository employeeRepository;
     private PasswordEncoder passwordEncoder;
+    private SendEmailService sendEmailService;
 
-    public RegisterService(UserRepository userRepository, EmployeeRepository employeeRepository, PasswordEncoder passwordEncoder) {
+    public RegisterService(UserRepository userRepository, EmployeeRepository employeeRepository, PasswordEncoder passwordEncoder, SendEmailService sendEmailService) {
         this.userRepository = userRepository;
         this.employeeRepository = employeeRepository;
         this.passwordEncoder = passwordEncoder;
+        this.sendEmailService = sendEmailService;
     }
-    
-public RegisterDto saveRegister(RegisterDto registerDto) {
+
+    public RegisterDto saveRegister(RegisterDto registerDto) {
 
         Employee employee = new Employee();
         employee.setFirstName(registerDto.getFirstName());
@@ -46,6 +50,18 @@ public RegisterDto saveRegister(RegisterDto registerDto) {
         user.setEmployee(employeeRepository.save(employee));
         userRepository.save(user);
 
+        SendEmail sendEmail = new SendEmail();
+        sendEmail.setTo(registerDto.getEmail());
+        sendEmail.setSubject("Selamat Anda Terdaftar");
+        sendEmailService.sendSimpleMessage(sendEmail, registerContext(registerDto));
+
         return registerDto;
+    }
+
+    private Context registerContext(RegisterDto registerDto) {
+        Context context = new Context();
+        context.setVariable("fullName", registerDto.getFirstName() + " " + registerDto.getLastName());
+
+        return context;
     }
 }

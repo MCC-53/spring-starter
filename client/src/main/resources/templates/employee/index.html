@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head th:include="masterLayout/master :: head">
+        <title>Employee</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <div id="customHead">
+        <link href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css" rel="stylesheet">
+    </div>
+</head>
+<body>
+    <div th:replace="masterLayout/master :: masterBody">
+        <div id="dataContent">
+            <div>
+                <h1>Data Employee</h1>
+                <div id="dataTable">
+                    <table class="table table-striped table-bordered" style="width:100%" id="table_employee">
+                        <thead>
+                            <tr>
+                                <td>ID</td>
+                                <td>First Name</td>
+                                <td>Last Name</td>
+                                <td>Email</td>
+                                <td>Address</td>
+                                <td>Department Name</td>
+                                <td>Action</td>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div th:replace="masterLayout/master :: script">
+        <div id="customScript">
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+            <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+        </div>
+    </div>
+</body>
+</html>

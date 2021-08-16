@@ -11,7 +11,8 @@ $(document).ready(function () {
     var table= $('#table').DataTable({
         ajax : {
             url : 'http://localhost:8085/department',
-            dataSrc : ''
+            dataSrc : '',
+            beforeSend: addRequestHeader()
         },
         "columns": [
             {
@@ -142,4 +143,15 @@ function setForm() {
 function disabledForm(isDisable) {
     $('#deptname').prop('disabled', isDisable);
     $('#submitButton').prop('disabled', isDisable);
+}
+
+function logout() {
+    $.ajax({
+        type: "POST",
+        url: '/department/logout',
+        success: (data) => {
+            success("you've been logout!");
+            window.location.href = 'http://localhost:8084/logout';
+        }
+    })
 }
