@@ -14,8 +14,9 @@ $(document).ready(function () {
 function showTable() {
     var table = $('#departmentTable').DataTable({
         ajax: {
-            url: `department/api`,
-            dataSrc: ''
+            url: `${baseUrl}/show`,
+            dataSrc: '',
+            beforeSend: addAuthRequestHeader()
         },
         columns: [
             {
@@ -61,8 +62,9 @@ function reloadTable() {
 
 function getById(id) {
     $.ajax({
-        url: `department/api/${id}`,
+        url: `${baseUrl}/showbyid/${id}`,
         dataType: 'json',
+        beforeSend: addAuthRequestHeader(),
         success: (data) => {
             department.id = data.id;
             department.name = data.name;
@@ -79,8 +81,9 @@ function detail(id){
 function deleteById(id) {
     question("Hapus department?", "Delete", () => {
         $.ajax({
-            type: "POST",
-            url: `department/api/delete/${id}`,
+            type: "DELETE",
+            url: `${baseUrl}/delete/${id}`,
+            beforeSend: addAuthRequestHeader(),
             success: (data) => {
                 success(`department ${data.name} berhasil dihapus`);
                 reloadTable();
@@ -96,11 +99,12 @@ function preparingUpdate(id){
 
 function update(department) {
     $.ajax({
-        type: "POST",
-        url: `department/api/update`,
+        type: "PUT",
+        url: `${baseUrl}/update/${department.id}`,
         contentType: 'application/json',
         data: JSON.stringify(department),
         dataType: 'json',
+        beforeSend: addAuthRequestHeader(),
         success: (data) => {
             success(`department ${data.name} berhasil diubah`);
             reloadTable();
@@ -117,10 +121,11 @@ function preparingCreate(){
 function create(department) {
     $.ajax({
         type: "POST",
-        url: `department/api/create`,
+        url: `${baseUrl}/create`,
         contentType: 'application/json',
         data: JSON.stringify(department),
         dataType: 'json',
+        beforeSend: addAuthRequestHeader(),
         success: () => {
             success(`Berhasil menambah department`);
             reloadTable();
