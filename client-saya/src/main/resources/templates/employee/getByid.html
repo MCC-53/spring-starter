@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Employee By Id Employee</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div>
+            <h3> Id Employee </h3>
+            <p th:text="${employee.id}"></p>
+            <h3>FirstName</h3>
+            <p th:text="${employee.firstName}"></p>
+            <h3>LastName</h3>
+            <p th:text="${employee.lastName}"></p>
+             <h3>Email</h3>
+            <p th:text="${employee.email}"></p>
+            <h3>Addres</h3>
+            <p th:text="${employee.address}"></p>
+            <h3>Departement Id</h3>
+            <td th:text="${employee.department.id}"></td>
+            <h3>Nama Department</h3>
+            <td th:text="${employee.department.name}"></td>
+            <h3>ID User</h3>
+            <td th:text="${employee.user.id}"></td>
+             <h3> Username</h3>
+            <td th:text="${employee.user.username}"></td>
+            <h3> Password</h3>
+            <td th:text="${employee.user.password}"></td>
+        </div>
+    </body>
+</html>
