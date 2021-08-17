@@ -7,6 +7,7 @@ package tugas.com.security.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -34,23 +35,24 @@ public class LoginService {
         this.passwordEncoder = passwordEncoder;
     }
     public AuthResponse login(LoginRequest loginRequest){
-        AuthResponse loginResponse = new AuthResponse();
+        AuthResponse authResponse = new AuthResponse();
         User user = new User();
         user = userRepository.findByUsername(loginRequest.getUsername());
-        
-        if(user == null){
-            throw new RuntimeException(String.format("Username '%s' not found", loginRequest.getUsername())); 
+
+        if (user==null){
+            throw new RuntimeException(String.format("Username '%s' not found",loginRequest.getUsername() ));
         }
-        boolean isPasswordMatches = passwordEncoder.matches(loginRequest.getPassword(),user.getPassword());
-        
-        if(isPasswordMatches == true){
-            String data = userDetailService.loadUserByUsername(loginRequest.getUsername()).getAuthorities().toString();
-            List<String> data2 = new ArrayList<>();
-            data2.add(user.getUsername());
-            data2.add(data);
-            loginResponse.setAuthorities(data2);
-            return loginResponse;
-        }else{
+
+        boolean isPasswordMatches  = passwordEncoder.matches(loginRequest.getPassword(), user.getPassword());
+
+        if (isPasswordMatches==true){
+            List<String> datarequest = userDetailService.loadUserByUsername(loginRequest.getUsername()).getAuthorities()
+                    .stream()
+                    .map(auth -> auth.getAuthority())
+                    .collect(Collectors.toList());
+            authResponse.setAuthorities(datarequest);
+            return authResponse;
+        }else {
             throw new UsernameNotFoundException("password tidak ditemukan");
         }
     }

@@ -27,10 +27,10 @@ public class DepartmentController {
         return "/department/index";
     }
     
-//    @Autowired
-//    public DepartmentController(DepartmentService departmentService) {
-//        this.departmentService = departmentService;
-//    }
+    @Autowired
+    public DepartmentController(DepartmentService departmentService) {
+        this.departmentService = departmentService;
+    }
 //
 //    @GetMapping
 //    public String getAll(Model model){
@@ -38,10 +38,10 @@ public class DepartmentController {
 //        return "department/index";
 //    }
 //    
-//    @GetMapping("/get-all")
-//    public @ResponseBody List<Department> getAll() {
-//        return departmentService.getAll();
-//    }
+    @GetMapping("/get-all")
+    public @ResponseBody List<Department> apiGetAll() {
+        return departmentService.getAll();
+    }
 //
 //    @GetMapping("{id}")
 //    public @ResponseBody Department getById(@PathVariable("id") Long id){

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author aceng
  */
 @Controller
-@RequestMapping
+@RequestMapping("/dashboard")
 public class DashboardController {
     @GetMapping
     public String index(){

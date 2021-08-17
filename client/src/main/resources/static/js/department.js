@@ -9,8 +9,9 @@ var depId;
 $(document).ready(function () {
     var table= $('#table_dept').DataTable({
         ajax : {
-            url : 'http://localhost:8083/department',
-            dataSrc : ''
+            url : 'http://localhost:8083/department/',
+            dataSrc : '',
+            beforeSend : addRequestHeader()
         },
         "columns": [
             {

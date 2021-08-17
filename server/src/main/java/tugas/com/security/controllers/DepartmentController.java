@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/department")
-//@PreAuthorize("hasAnyRole('ADMIN', 'EMPLOYEE')")
+@PreAuthorize("hasAnyRole('ADMIN', 'EMPLOYEE')")
 public class DepartmentController {
     private DepartmentService departmentService;
 
@@ -23,7 +23,7 @@ public class DepartmentController {
     }
 
     @GetMapping
-//    @PreAuthorize("hasAuthority('READ_DATA')")
+    @PreAuthorize("hasAuthority('READ')")
     public ResponseEntity<List<Department>> getAll(){
         return new ResponseEntity(departmentService.getAll(), HttpStatus.OK);
     }
